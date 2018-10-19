@@ -1,42 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Smart Columbus Experience Center</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--  Leaflet CSS file  -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.4/dist/leaflet.css"
-    integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA=="
-    crossorigin=""/>
-    <!-- Leaflet JavaScript file -->
-    <!-- <script src="https://unpkg.com/leaflet@1.3.4/dist/leaflet.js"
-    integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="
-    crossorigin=""></script> -->
-
-    <script src="scripts/leaflet.js"></script>
-</head>
-<body>
-    <div id="mapid" style="width: 800px; height: 600px; position: relative;"></div>
-    <!-- Begin JavaScript -->
-    <script>
-        //var csv is the CSV file with headers
-        function csvJSON(csv){
-            var lines=csv.split("\n");
-            var result = [];
-            var headers=lines[0].split(",");
-            for(var i=1;i<lines.length;i++){
-                var obj = {};
-                var currentline=lines[i].split(",");
-                for(var j=0;j<headers.length;j++){
-                    obj[headers[j]] = currentline[j];
-                }
-                result.push(obj);
-            }
-            //return result; //JavaScript object
-            return JSON.stringify(result); //JSON
-        }
-        function getData() {
-            var data = "id,name,host_id,host_name,neighbourhood_group,neighbourhood,latitude,longitude,room_type,price,minimum_nights,number_of_reviews,last_review,reviews_per_month,calculated_host_listings_count,availability_365\n\
+id,name,host_id,host_name,neighbourhood_group,neighbourhood,latitude,longitude,room_type,price,minimum_nights,number_of_reviews,last_review,reviews_per_month,calculated_host_listings_count,availability_365\n\
 90676,Short North - Italianate Cottage,483306,Audra & Lacey,,Near North/University,39.98394409360672,-83.00321438009588,Entire home/apt,198,1,223,2018-08-04,2.67,3,128\n\
 497808,Priv. 1st Flr Mattress - N.Campus,2350409,Eddie,,Near North/University,40.01068502951252,-83.00937707429402,Private room,20,3,17,2018-08-11,0.29,4,243\n\
 543140,Private 2nd Floor Room -- N.Campus,2350409,Eddie,,Near North/University,40.01242981545072,-83.0098628739328,Private room,47,2,87,2018-07-17,1.18,4,24\n\
@@ -55,7 +17,7 @@
 1572814,Newly Renovated Charming Townhome,8361110,Kristen,,Near South,39.93986391640123,-82.98419706174467,Entire home/apt,85,7,26,2018-07-01,0.66,3,79\n\
 1681195,Charming & close to German Village,8361110,Kristen,,Near South,39.93871012665995,-82.98035247425015,Entire home/apt,85,7,36,2018-06-17,0.61,3,79\n\
 1763836,Charming 1BR Apt in Clintonville,7785489,Nancy,,Near North/University,40.01796413413317,-83.00266859470354,Entire home/apt,85,3,59,2018-07-08,1.01,4,333\n\
-1900779,Urban Oasis near Short North, OSU - Free WiFi,9870556,Lisa,,Near North/University,,39.98520024061168,-83.01300274041412,Entire home/apt,157,2,13,2018-07-15,0.25,1,334\n\
+1900779,"Urban Oasis near Short North, OSU - Free WiFi",9870556,Lisa,,Near North/University,39.98520024061168,-83.01300274041412,Entire home/apt,157,2,13,2018-07-15,0.25,1,334\n\
 2031035,Historic Old Oaks Home - Downtown!,5856018,Luke,,Near South,39.95192327479129,-82.96644330995514,Entire home/apt,112,1,18,2018-07-15,0.44,4,358\n\
 2134901,Terrific Apt just south of OSU,6466841,Linda,,Near North/University,39.98743157632981,-83.01669357819782,Entire home/apt,180,2,23,2018-08-05,0.42,5,313\n\
 2141251,Heart of German Village,9554827,Josh,,Near South,39.950981013027565,-82.994189565923,Private room,60,1,513,2018-07-30,9.45,1,220\n\
@@ -67,7 +29,7 @@
 2278955,Eco friendly!  Quiet neighborhood.,11627907,Diana,,North Linden,40.014006734565726,-82.94067241654244,Private room,65,1,55,2018-07-22,1.00,1,87\n\
 2284335,Clean  House Close Downtown/OSU,4911015,Natalia,,Clintonville,40.02789437764842,-83.02263836885618,Entire home/apt,86,1,172,2018-07-08,3.14,2,277\n\
 2333143,Merion Village: Heritage BrickHouse,11917334,Todd,,Near South,39.93242636778994,-82.9871670809283,Entire home/apt,169,2,162,2018-07-22,3.11,2,107\n\
-2349920,Comfy, Chic Short North Home w/Free Parking,10776491,Catherine & Bryan,,Near North/University,39.98616994034197,-83.00370744509618,Entire home/apt,249,1,71,2018-08-02,1.30,2,235\n\
+2349920,"Comfy, Chic Short North Home w/Free Parking",10776491,Catherine & Bryan,,Near North/University,39.98616994034197,-83.00370744509618,Entire home/apt,249,1,71,2018-08-02,1.30,2,235\n\
 2642205,Comfortable nice Bedroom,13527293,Danny,,Eastland/Brice,39.92098405462722,-82.82188548378733,Private room,50,1,5,2017-10-13,0.17,1,365\n\
 2784609,Cozy and Close to German Village,8361110,Kristen,,Near South,39.93956937007767,-82.97998655737508,Entire home/apt,85,7,18,2018-07-03,0.39,3,34\n\
 3193181,LUXURY LIVING on a budget,16184897,Toya,,South Linden,40.00869987911739,-82.97471788611001,Entire home/apt,70,1,103,2018-07-16,2.02,4,80\n\
@@ -78,19 +40,19 @@
 3750603,Private room downtown! Historic Old Oaks,5856018,Luke,,Near East,39.95361534484029,-82.96791241079613,Private room,29,1,19,2018-02-02,0.39,4,4\n\
 3772260,Condo-Short North-Best Location!,11508223,Brittany,,Near North/University,39.97659141831063,-83.00554134797852,Entire home/apt,60,28,13,2015-01-18,0.27,1,46\n\
 3940646,The Manor-  3rd FL. Loft Apt. - Close to Downtown,19532241,Tawana,,Near East,39.965531052061365,-82.97665166268615,Entire home/apt,89,1,97,2018-08-01,6.05,2,153\n\
-3975468,Serial Entrepreneur-Ship (S.E.S),16184897,Toya,,South Linden,40.00898707160216,-82.9753376071719,Private room,45,1,45,2018-05-21,0.97,4,177\n\
-4270750,Modern, Loft-like Apartment in Arena District,11505816,Michael,,Downtown,39.968420126702064,-83.00835051847952,Entire home/apt,135,1,243,2018-08-12,5.18,1,334\n\
-4396402,Luxury, near downtown,16385747,Howard,,Near East,39.96802389909226,-82.9709781916182,Private room,70,2,60,2018-08-13,1.36,1,359\n\
+3975468,"Serial Entrepreneur-Ship (""S.E.S"")",16184897,Toya,,South Linden,40.00898707160216,-82.9753376071719,Private room,45,1,45,2018-05-21,0.97,4,177\n\
+4270750,"Modern, Loft-like Apartment in Arena District",11505816,Michael,,Downtown,39.968420126702064,-83.00835051847952,Entire home/apt,135,1,243,2018-08-12,5.18,1,334\n\
+4396402,"Luxury, near downtown",16385747,Howard,,Near East,39.96802389909226,-82.9709781916182,Private room,70,2,60,2018-08-13,1.36,1,359\n\
 4558073,Clean House Close OSU/MAPFRE/Short North,4911015,Natalia,,Clintonville,40.027626326047745,-83.02085061220659,Entire home/apt,99,1,20,2018-06-30,2.05,2,277\n\
 4679761,King Private Room at the Hostel,4965048,Mathew,,Near North/University,40.0132001583873,-83.00186838213264,Private room,70,1,14,2018-07-23,0.53,7,345\n\
 4708350,Cozy Room to Lay Your Head,24335524,Aj,,Rocky Fork-Blacklick,40.076412809556636,-82.90180033081262,Private room,125,1,0,,,1,365\n\
-4735630,Upscale, private, and close to campus and downtown,24421564,Garry,,West Scioto,39.99409902288164,-83.08320562955086,Private room,110,1,9,2018-07-08,0.26,1,365\n\
+4735630,"Upscale, private, and close to campus and downtown",24421564,Garry,,West Scioto,39.99409902288164,-83.08320562955086,Private room,110,1,9,2018-07-08,0.26,1,365\n\
 4812659,Charming 3 bedroom Home,8814762,Ashley & Andrew,,North Linden,40.043547879023286,-82.985387965516,Entire home/apt,99,4,28,2018-05-19,0.67,2,72\n\
 5091530,Full condo in Short North location!,26304551,Dan,,Near North/University,39.975241643309246,-83.00407552409534,Entire home/apt,95,2,101,2018-08-04,2.33,1,163\n\
 5232411,German Village townhouse in the sky,78761,Jeff & Stevo,,Near South,39.948906393969686,-82.99491662603226,Entire home/apt,199,3,46,2018-07-15,1.24,2,358\n\
-5297763,Comfy 3 bed duplex, Short North area, Sleeps 8,27439453,Ingrid & Mike,,Near North/University,39.98878727354987,-83.00255230799837,Entire home/apt,140,1,163,2018-08-12,4.20,9,264\n\
+5297763,"Comfy 3 bed duplex, Short North area, Sleeps 8",27439453,Ingrid & Mike,,Near North/University,39.98878727354987,-83.00255230799837,Entire home/apt,140,1,163,2018-08-12,4.20,9,264\n\
 5372431,Frequent Traveler's Comfort Zone,24503470,Erica,,Northeast,40.01026976500369,-82.92709150860054,Private room,35,1,63,2018-07-28,1.57,2,26\n\
-5396611,Stylish /Downtown,OSU,27964222,Bonnie,,Hilltop,39.95078269504731,-83.08395389706435,Private room,55,1,119,2018-07-21,2.84,1,157\n\
+5396611,"Stylish /Downtown,OSU",27964222,Bonnie,,Hilltop,39.95078269504731,-83.08395389706435,Private room,55,1,119,2018-07-21,2.84,1,157\n\
 5434648,Cozy Bedroom/Bathroom Close to I-70 & 270/Hilliard,28193759,Diane,,Far West,39.98348813586353,-83.12071583167162,Private room,46,1,45,2018-08-13,8.04,1,59\n\
 5533834,Large Short North House,28695156,Miles,,Near North/University,39.98296482877651,-82.9987059759258,Entire home/apt,295,1,97,2018-07-17,2.32,4,347\n\
 5535278,The Schiller Room- On the Park GV,28694314,Jim,,Near South,39.94348628450112,-82.98923785300082,Entire home/apt,115,1,149,2018-07-22,3.67,1,359\n\
@@ -107,7 +69,7 @@
 6214751,1 Bedroom Lower Level Apartment,31349526,Bill & Michael,,Near East,39.96610478086611,-82.96512069597239,Entire home/apt,99,1,115,2018-08-05,2.90,1,164\n\
 6246570,Modern/Historic with a street view.,28025453,James,,Near South,39.94480101668722,-82.98325052624541,Private room,49,2,119,2018-05-28,3.00,1,264\n\
 6287586,ENTIRE 3 BR EXECUTIVE IN OSU AREA,32686087,Steve & Sarah,,South Linden,40.00772326805474,-82.99478974572135,Entire home/apt,110,1,268,2018-07-29,6.78,1,302\n\
-6391158,Your  Home in Columbus ,Ohio 43230,33321292,Figen,,Rocky Fork-Blacklick,40.06224675806148,-82.85429260505646,Private room,48,1,68,2018-08-11,1.74,2,364\n\
+6391158,"Your  Home in Columbus ,Ohio 43230",33321292,Figen,,Rocky Fork-Blacklick,40.06224675806148,-82.85429260505646,Private room,48,1,68,2018-08-11,1.74,2,364\n\
 6416756,Your home in Columbus 43230,33321292,Figen,,Rocky Fork-Blacklick,40.06192589076475,-82.8543556475165,Private room,58,1,54,2018-08-11,1.39,2,364\n\
 6423005,The Perfect Pad All To Yourself,4355510,Nils,,Near North/University,39.973882490936624,-83.00451126761831,Entire home/apt,145,4,141,2018-07-30,3.86,1,346\n\
 6490155,10 minutes from Airport &  Easton,33917644,Shell,,Northeast,40.03176207025633,-82.92221508281062,Private room,69,2,75,2018-08-03,1.91,1,347\n\
@@ -117,16 +79,16 @@
 6805322,The Short S.T.O.P.P,16184897,Toya,,South Linden,40.00710852675202,-82.97378541866617,Shared room,30,1,24,2017-10-28,0.64,4,86\n\
 7021423,Historic home near German Village,18747785,Rebecca,,Near South,39.94993214739992,-82.98230627295403,Entire home/apt,220,5,25,2018-06-18,0.67,1,101\n\
 7037455,Private bed & bath in my home.,36896916,Jessica,,Near East,39.969294257488734,-82.98031472165479,Private room,80,2,47,2018-05-21,1.25,1,348\n\
-7061726,Cozy 3 Bed Short North area duplex, Sleeps 8,27439453,Ingrid & Mike,,Near North/University,39.986954907902835,-83.00125074343676,Entire home/apt,140,1,137,2018-08-12,3.65,9,250\n\
+7061726,"Cozy 3 Bed Short North area duplex, Sleeps 8",27439453,Ingrid & Mike,,Near North/University,39.986954907902835,-83.00125074343676,Entire home/apt,140,1,137,2018-08-12,3.65,9,250\n\
 7087685,Comfortable room in German Village,36668084,Ryan And Teresa,,Near South,39.940382630678954,-82.98595860393613,Private room,55,1,142,2018-07-15,3.86,1,344\n\
 7265561,Magnificent home German Village walk to attraction,34012934,Roger,,Near South,39.9410657659495,-82.9903726953038,Entire home/apt,250,2,65,2018-07-30,1.74,2,305\n\
 7329186,Schiller Park Guesthouse,34012934,Roger,,Near South,39.941085866433774,-82.9881110650073,Entire home/apt,190,2,64,2018-07-31,1.70,2,324\n\
 7437773,Comfy room close to OSU/downtown!,38962915,Jennifer,,West Olentangy,39.98605708415429,-83.0391597841555,Private room,45,1,283,2018-08-13,7.64,3,11\n\
 7549237,Spacious Master Suite (Street View),4744568,Jenna And Ethan,,Near North/University,39.994753453929135,-82.997821362411,Private room,50,1,224,2018-07-29,6.09,6,33\n\
-7549298,Delightfully Airy, Private Quarters,4744568,Jenna And Ethan,,Near North/University,39.99452762724604,-82.99789877140466,Private room,45,1,187,2018-07-29,5.08,6,14\n\
+7549298,"Delightfully Airy, Private Quarters",4744568,Jenna And Ethan,,Near North/University,39.99452762724604,-82.99789877140466,Private room,45,1,187,2018-07-29,5.08,6,14\n\
 7549331,Tranquil House Attic w/ Warm Decor,4744568,Jenna And Ethan,,Near North/University,39.994722058881685,-82.99760058482573,Private room,50,1,163,2018-07-16,4.45,6,41\n\
-7549346,Quiet, Cozy Attic(with Garden View),4744568,Jenna And Ethan,,Near North/University,39.9961765510042,-82.99755825972532,Private room,43,1,191,2018-07-29,5.21,6,42\n\
-7554962,Quaint, Folksy, Traveler's Room,4744568,Jenna And Ethan,,Near North/University,39.99593151895623,-82.99635402044301,Private room,43,1,234,2018-07-24,6.37,6,35\n\
+7549346,"Quiet, Cozy Attic(with Garden View)",4744568,Jenna And Ethan,,Near North/University,39.9961765510042,-82.99755825972532,Private room,43,1,191,2018-07-29,5.21,6,42\n\
+7554962,"Quaint, Folksy, Traveler's Room",4744568,Jenna And Ethan,,Near North/University,39.99593151895623,-82.99635402044301,Private room,43,1,234,2018-07-24,6.37,6,35\n\
 7555301,Classy Condo - Spacious and Updated,39600823,Betsy And Mike,,Rocky Fork-Blacklick,40.09408517041187,-82.85701164782063,Entire home/apt,155,2,48,2018-07-27,1.37,1,326\n\
 7564891,Tulsa #3 Nicely Priced Bedroom,39662644,Paul,,Northland,40.06521151369146,-82.98859382835684,Private room,75,2,5,2017-05-13,0.14,9,314\n\
 7617016,Tulsa #1 Large House Master Bedroom,39662644,Paul,,Northland,40.06420432402796,-82.98782943278013,Private room,75,10,5,2017-09-07,0.14,9,315\n\
@@ -138,10 +100,10 @@
 8291916,Perfect Clintonville Pre-fabulous in 1950s Cottage,12504232,Jess,,Clintonville,40.04260428332018,-83.00466931427778,Private room,26,1,46,2018-07-24,1.35,3,363\n\
 8308869,Charming (& Spacious) Clintonville Cape Cod Loft!,12504232,Jess,,Clintonville,40.0401328531739,-83.01351246460278,Private room,32,1,38,2018-07-28,1.36,3,364\n\
 8492057,Restful Retreat right in the city!,10577548,Eliah,,Clintonville,40.06819237166619,-83.02478814800664,Private room,150,1,19,2018-06-28,0.96,1,262\n\
-8507141,Tulsa #5 Bedroom, large,39662644,Paul,,North Linden,40.06102955609336,-82.9884104377852,Private room,50,2,1,2018-04-20,0.25,9,150\n\
+8507141,"Tulsa #5 Bedroom, large",39662644,Paul,,North Linden,40.06102955609336,-82.9884104377852,Private room,50,2,1,2018-04-20,0.25,9,150\n\
 8507146,Tulsa #6 Nicely Priced Bedroom,39662644,Paul,,Northland,40.064895041364906,-82.98810636897326,Private room,75,14,9,2018-05-30,0.37,9,248\n\
 8578379,Beautiful Olde Towne East Home,44880235,Regan,,Near East,39.96144721610066,-82.97216162535481,Private room,30,1,209,2018-08-13,5.98,1,283\n\
-8596626,Private room near German Village, Downtown,44464573,Hannah-Maria,,Near South,39.93583852473404,-82.99141412697871,Private room,48,1,26,2018-08-11,2.39,1,157\n\
+8596626,"Private room near German Village, Downtown",44464573,Hannah-Maria,,Near South,39.93583852473404,-82.99141412697871,Private room,48,1,26,2018-08-11,2.39,1,157\n\
 8662090,Beautiful Upstairs Apt. in Olde Towne East,1583338,Jay & Michael,,Near East,39.96661442087896,-82.9644115475499,Entire home/apt,89,2,87,2018-07-29,2.58,2,348\n\
 8687948,Fabulous  downstairs apartment in beautiful home,35480169,Margaret,,Northwest,40.06538547824437,-83.09940699889614,Entire home/apt,75,2,67,2018-08-05,1.95,2,353\n\
 8688074,Olde Towne East Antique Modern Apt,323706,Courtnee,,Near East,39.963313532447145,-82.96602934898806,Entire home/apt,79,1,195,2018-08-02,5.59,3,5\n\
@@ -159,7 +121,7 @@
 9213984,Peaceful home in the Dublin area,36990978,Bonnie,,Far Northwest,40.10672019350641,-83.0752931729034,Entire home/apt,160,2,84,2018-08-05,2.53,1,339\n\
 9240350,Private Room in Artist's Home,4435630,Jen,,Far Northwest,40.11174593036029,-83.071311274374,Private room,48,1,35,2018-08-01,1.13,1,79\n\
 9362314,Chic Short North 3 Bedroom,33738327,Jordan & Megan,,Near North/University,39.98019051902898,-83.00923167855962,Entire home/apt,169,2,41,2018-08-12,1.44,1,12\n\
-9403080,The Coop  Near Easton Town Center Columbus, OH,7934201,Robin,,Northland,40.06078687930444,-82.9207258126276,Entire home/apt,110,1,91,2018-08-15,3.88,1,309\n\
+9403080,"""The Coop""  Near Easton Town Center Columbus, OH",7934201,Robin,,Northland,40.06078687930444,-82.9207258126276,Entire home/apt,110,1,91,2018-08-15,3.88,1,309\n\
 9430298,Traveler's Adytum`,48206508,Caren,,Rocky Fork-Blacklick,40.06461215263195,-82.85725517100721,Private room,36,1,47,2018-06-17,1.58,1,328\n\
 9515789,LOFT~2B/2Ba & Patio~Free Parking @ Easton~Airport.,49305658,Joe,,Northeast,40.02427960987428,-82.9162743982108,Entire home/apt,99,3,71,2018-07-23,2.16,1,74\n\
 9542633,Cottage on City Park!  Greenroom Refrig &40in T.V,49421637,Jerry,,Hilltop,39.94546981226341,-83.08146471661452,Private room,33,1,160,2018-08-12,5.06,4,349\n\
@@ -172,11 +134,11 @@
 10016466,Modern Loft Space Fully Renovated,44442395,Jeff,,Near North/University,39.981838442788096,-83.02069090642526,Entire home/apt,100,1,84,2018-07-09,2.60,1,62\n\
 10057188,Unique Spacious German Village Gem,51611845,Chad,,Near South,39.945341298021,-82.98670643373224,Entire home/apt,325,1,82,2018-07-29,2.67,1,281\n\
 10123323,Comfy condo ❤ of Short North & Free Parking,2994567,Mark,,Near North/University,39.97488695037478,-83.00346569903166,Entire home/apt,120,2,67,2018-08-05,2.10,3,266\n\
-10226305,Loft-Bed Studio, Short North & OSU,14397907,Bernard,,Near North/University,39.97940878662597,-83.005015852472,Entire home/apt,79,1,120,2018-08-15,4.10,3,313\n\
+10226305,"Loft-Bed Studio, Short North & OSU",14397907,Bernard,,Near North/University,39.97940878662597,-83.005015852472,Entire home/apt,79,1,120,2018-08-15,4.10,3,313\n\
 10319967,Private Entrance on CityPark Massage Chair&refrig!,49421637,Jerry,,Hilltop,39.94339762964818,-83.08012432489565,Private room,43,1,145,2018-07-08,5.44,4,337\n\
 10343442,one private room with a single bed,52830494,YuCheng,,Northwest,40.079779344994755,-83.09474687244102,Private room,50,1,0,,,1,365\n\
 10383297,East Columbus Suburbs with private bath,53450563,John,,Far East,40.00027246462237,-82.78248332979209,Private room,38,1,60,2018-07-29,1.94,1,361\n\
-10433808,Contemporary 2 Bdrm Home, Clintonville,12385603,Anne,,Clintonville,40.05497704199246,-83.0098799095711,Entire home/apt,95,30,29,2018-08-09,0.97,1,186\n\
+10433808,"Contemporary 2 Bdrm Home, Clintonville",12385603,Anne,,Clintonville,40.05497704199246,-83.0098799095711,Entire home/apt,95,30,29,2018-08-09,0.97,1,186\n\
 10476203,Sunny BR with private bath,35144493,Janelle,,Near East,39.96899469302404,-82.97333140441958,Private room,99,2,40,2018-07-15,1.35,1,161\n\
 10520873,The Hangar- Crow's Nest in Short North near OSU,14397907,Bernard,,Near North/University,39.97916055915856,-83.00384271801794,Entire home/apt,125,1,37,2018-08-12,1.57,3,209\n\
 10802172,Modern 3bd Central Columbus Home,8814762,Ashley & Andrew,,Clintonville,40.030191791184,-83.0209337684582,Entire home/apt,160,1,161,2018-08-04,5.35,2,54\n\
@@ -191,7 +153,7 @@
 11504774,1 bed townhome -Close to everything,60606388,Foundry,,Near North/University,39.98149245450349,-82.99799203757675,Entire home/apt,145,1,91,2018-07-29,3.05,1,161\n\
 11533820,Victorian Village Spacious Apt.,26118931,Ryan,,Near North/University,39.98598035868356,-83.01118337614726,Entire home/apt,115,1,52,2018-07-24,1.74,1,2\n\
 11546655,Clintonville Charmer That's Close to it All!,44507743,Christina,,Clintonville,40.02415477698362,-83.00518432992702,Entire home/apt,169,2,7,2018-05-21,0.67,1,224\n\
-11565629,Street parking, small room.,61094311,Chris,,Westland,39.937655384044895,-83.16087388013105,Private room,200,1,0,,,1,365\n\
+11565629,"Street parking, small room.",61094311,Chris,,Westland,39.937655384044895,-83.16087388013105,Private room,200,1,0,,,1,365\n\
 11587108,Library Park Guesthouse,61274454,Nancy,,Downtown,39.96034637640377,-82.9907329871307,Entire home/apt,175,2,23,2018-07-16,0.80,1,286\n\
 11619126,Private Living Room/ Sleeps 2,38461116,Eric,,Near North/University,39.986949994720625,-83.00097158343043,Private room,70,1,2,2017-05-22,0.08,1,365\n\
 11673338,Charming Marble Cliff Area Townhome,61981933,Tammy,,West Scioto,39.98710953621028,-83.06752500216227,Private room,60,1,4,2018-07-27,0.14,1,348\n\
@@ -206,30 +168,30 @@
 12272948,Executive  suit,66107730,HAnna,,Hayden Run,40.06009781234288,-83.12838745736886,Private room,115,1,1,2018-03-08,0.19,2,364\n\
 12293481,Private room near OSU/Downtown!,38962915,Jennifer,,West Olentangy,39.98732164015759,-83.03982395041159,Private room,42,1,45,2018-07-22,1.65,3,15\n\
 12334960,Comfortable convenient condo,9316340,Connie,,West Scioto,39.9800234848233,-83.08867003928394,Entire home/apt,40,27,3,2017-08-06,0.12,1,163\n\
-12386506,Quiet, Clean, Restful Stay with Full Breakfast,21780254,Jody,,Near South,39.93435903679835,-82.9533890435903,Private room,45,1,100,2018-07-30,3.80,3,231\n\
+12386506,"Quiet, Clean, Restful Stay with Full Breakfast",21780254,Jody,,Near South,39.93435903679835,-82.9533890435903,Private room,45,1,100,2018-07-30,3.80,3,231\n\
 12402287,Townhouse w/ private roof & parking,51548643,Julia,,Near North/University,39.98481472927885,-83.00868929397474,Private room,120,1,44,2018-07-23,1.55,1,80\n\
 12568705,Luxury Home @ Easton~2BR/2BA.,68145274,J & L,,Northeast,40.047413438620275,-82.9127677907771,Entire home/apt,129,2,87,2018-08-01,3.09,2,74\n\
-12631194,Urban I, 3 Bed Duplex, Short North area, Sleeps1-9,27439453,Ingrid & Mike,,Near North/University,39.9882879034037,-83.0022045503285,Entire home/apt,135,1,82,2018-08-12,3.27,9,350\n\
+12631194,"Urban I, 3 Bed Duplex, Short North area, Sleeps1-9",27439453,Ingrid & Mike,,Near North/University,39.9882879034037,-83.0022045503285,Entire home/apt,135,1,82,2018-08-12,3.27,9,350\n\
 12654586,Walkable to OSU and High Street. Sauna access,63540246,Bill,,Near North/University,40.0122996532041,-83.0085795420438,Private room,51,2,17,2018-07-08,0.63,1,136\n\
 12683508,Tiny House Urban Cabin Shared Bath,4965048,Mathew,,Near North/University,40.01177673711501,-83.00118849692939,Private room,70,1,16,2018-06-24,0.59,7,346\n\
-12684302,Retro Duckroom Den Retreat!,12504232,Jess,,Clintonville,40.04401653052968,-83.0154096859019,Private room,38,1,8,2017-09-10,0.29,3,364\n\
+12684302,"Retro ""Duckroom"" Den Retreat!",12504232,Jess,,Clintonville,40.04401653052968,-83.0154096859019,Private room,38,1,8,2017-09-10,0.29,3,364\n\
 12684949,Private bed & bath 10 mins from DT,24166286,Tarah,,Rocky Fork-Blacklick,40.07825307915639,-82.86542938585674,Private room,45,1,31,2018-08-11,1.12,1,308\n\
-12737365,Bedroom & Private Bath, Dublin/Hilliard, OH,3492360,Greg,,Hayden Run,40.0595037355922,-83.11926243423292,Private room,42,1,143,2018-07-30,5.37,1,162\n\
+12737365,"Bedroom & Private Bath, Dublin/Hilliard, OH",3492360,Greg,,Hayden Run,40.0595037355922,-83.11926243423292,Private room,42,1,143,2018-07-30,5.37,1,162\n\
 12751583,Heart of Olde Towne East Loft,68942337,Brad,,Near East,39.96356294168424,-82.97594728613734,Entire home/apt,200,1,160,2018-08-04,6.11,1,147\n\
 12755075,Quaint 1920's Townhouse,69289743,Sarah,,Near South,39.92995561955266,-82.99156876341284,Entire home/apt,84,2,62,2018-08-12,2.40,1,74\n\
-12807651,1BR 1-person Clintonville Apt, (5-day min rental),7785489,Nancy,,Near North/University,40.01888478399913,-83.0005183449504,Entire home/apt,60,5,10,2018-07-24,0.40,4,310\n\
+12807651,"1BR 1-person Clintonville Apt, (5-day min rental)",7785489,Nancy,,Near North/University,40.01888478399913,-83.0005183449504,Entire home/apt,60,5,10,2018-07-24,0.40,4,310\n\
 12811270,1 bedroom Short North Apartment!,29506288,Eric,,Near North/University,39.97872736368038,-83.00592485399534,Entire home/apt,85,1,5,2016-08-01,0.18,7,90\n\
 12890097,Looking to rent out a room,70561947,Kyle,,Hayden Run,40.05614440857972,-83.16828975019132,Private room,800,1,0,,,1,89\n\
 12929455,Historic German Village Home,47590367,Sonny & Chelsey,,Near South,39.95093073835179,-82.99645736780403,Entire home/apt,175,2,114,2018-08-12,4.45,1,306\n\
 12933962,Victorian Village Condo 2BR,48788256,Jose,,Near North/University,39.983021104264395,-83.01430263068303,Entire home/apt,139,7,21,2018-06-26,0.78,2,19\n\
 12969543,Have a group of 4?  Book two rooms together!,38962915,Jennifer,,West Olentangy,39.985905259765104,-83.04058490006226,Private room,100,1,2,2018-05-07,0.08,3,54\n\
-13018362,Great House =10 Guests, 4 Bedrooms & 2 Bathrooms,71859419,Dean,,West Olentangy,40.02861991462057,-83.04494688653699,Entire home/apt,250,2,75,2018-08-13,2.76,2,167\n\
+13018362,"Great House =10 Guests, 4 Bedrooms & 2 Bathrooms",71859419,Dean,,West Olentangy,40.02861991462057,-83.04494688653699,Entire home/apt,250,2,75,2018-08-13,2.76,2,167\n\
 13045810,Perfect for couples get away or singles traveling,72181837,Greg,,Northland,40.10056413524369,-82.97289959640618,Private room,44,1,21,2018-08-08,1.73,1,364\n\
 13089173,Eastwood Heights Lounge,33524881,Keith,,Near East,39.969014440241686,-82.96385787023642,Private room,25,1,37,2018-08-08,1.39,1,159\n\
 13095135,Clintonville Home,32912159,John,,Clintonville,40.02819227763437,-83.02247237384626,Entire home/apt,70,2,364,2018-08-09,13.48,1,6\n\
-13112313,Private room, 2 Twin beds & dedicated bathroom,72906181,Barbara,,Northland,40.07822799046931,-82.95589032214716,Private room,40,1,145,2018-07-22,5.33,2,168\n\
+13112313,"Private room, 2 Twin beds & dedicated bathroom",72906181,Barbara,,Northland,40.07822799046931,-82.95589032214716,Private room,40,1,145,2018-07-22,5.33,2,168\n\
 13116142,Private 1 Bedroom Short North Suite Apartment,72952942,Phil,,Near North/University,39.984462508504336,-82.9983342846414,Entire home/apt,120,2,66,2018-07-22,2.86,1,70\n\
-13138571,Private, Full bed & dedicated bathroom North Cbus,72906181,Barbara,,Northland,40.078143200456005,-82.95584083550908,Private room,46,1,147,2018-07-31,5.48,2,142\n\
+13138571,"Private, Full bed & dedicated bathroom North Cbus",72906181,Barbara,,Northland,40.078143200456005,-82.95584083550908,Private room,46,1,147,2018-07-31,5.48,2,142\n\
 13222574,Cozy luxury master bedroom w/ private bathroom,63285107,Alberto,,West Olentangy,40.052579625829196,-83.04828019863683,Private room,40,1,9,2018-08-12,0.33,2,0\n\
 13223833,Welcome! Share my home on Columbus's Westside :),74207205,Katy,,Far West,40.00948970199943,-83.14552597786557,Private room,31,3,30,2018-08-04,1.17,1,99\n\
 13293966,Downtown Living,48788256,Jose,,Near North/University,39.98300795515998,-83.0135745991175,Private room,69,5,1,2018-07-31,1,2,43\n\
@@ -239,7 +201,7 @@
 13410261,★2 Bed★TV ★❤️ of OSU★Mapfre★Laundry★Loft★Walk/Bus★,41002453,Jerry,,Near North/University,40.01066714685951,-82.99698293800094,Private room,45,1,202,2018-08-11,7.61,8,341\n\
 13446477,★OSU★Mapfre★Laundry★Bus/walk★Renovated★★ Laundry★,41002453,Jerry,,Near North/University,40.007605730792044,-82.99968521992065,Private room,33,1,109,2018-08-06,4.52,8,246\n\
 13550436,Quiet basement room in townhouse,10150669,Jessica,,Near South,39.94202490263008,-82.96540326188571,Private room,30,1,65,2018-08-14,2.66,4,84\n\
-13559973,Cozy, Centrally Located Home- close to Riverside,63628878,Merry,,West Olentangy,40.03409857525188,-83.03781977507751,Private room,40,1,108,2018-07-28,4.18,1,92\n\
+13559973,"Cozy, Centrally Located Home- close to Riverside",63628878,Merry,,West Olentangy,40.03409857525188,-83.03781977507751,Private room,40,1,108,2018-07-28,4.18,1,92\n\
 13635802,Short North / Victorian Village apartment,79078024,Marc,,Near North/University,39.982709933072606,-83.01473920192487,Entire home/apt,85,1,61,2018-08-05,2.60,1,53\n\
 13672030,Lovely Spacious Private Apartment!,18050096,Ashley,,West Olentangy,40.039995177412614,-83.03185607946133,Entire home/apt,85,2,76,2018-08-09,3.15,1,50\n\
 13672159,Short North Ensuite - Off-Street Parking!,26073351,Ryan,,Near North/University,39.97707630637685,-83.01129217483961,Private room,73,1,141,2018-07-31,5.45,3,155\n\
@@ -248,7 +210,7 @@
 13761608,Private Room and Bathroom.,17476820,Chuan En,,Northland,40.10299019542574,-82.97987822683606,Private room,35,2,76,2018-07-22,2.98,1,45\n\
 13826182,Easton Luxury Penthouse ~ 2BR Restoration Design,68145274,J & L,,Northeast,40.04721260328383,-82.91354968517616,Entire home/apt,129,2,59,2018-07-29,2.31,2,228\n\
 13860974,Comfortable brick home with parking.,81903515,Marchalle,,Eastmoor/Walnut Ridge,39.943672976510754,-82.91651735400431,Private room,30,1,98,2018-08-10,3.88,1,349\n\
-13863391,Beautiful, cozy & quiet home with pool & gym!,69087176,Kelsy,,Rocky Fork-Blacklick,40.10222209105656,-82.8522307831386,Entire home/apt,120,1,3,2018-08-05,3,1,33\n\
+13863391,"Beautiful, cozy & quiet home with pool & gym!",69087176,Kelsy,,Rocky Fork-Blacklick,40.10222209105656,-82.8522307831386,Entire home/apt,120,1,3,2018-08-05,3,1,33\n\
 13885212,Grande Room with a View,82206362,Gail,,Near East,39.96449894061437,-82.95507136606915,Private room,50,1,28,2018-08-13,1.58,1,180\n\
 13901264,Ace Location.Hospitality Specialist included,70413293,STR Capital,,Northeast,40.047500055739945,-82.91570000339995,Entire home/apt,75,1,126,2018-08-11,5.09,8,176\n\
 13993477,The Judges Mansion: Project Apt,323706,Courtnee,,Near East,39.96524592968579,-82.96672922416448,Entire home/apt,86,1,222,2018-08-07,8.81,3,1\n\
@@ -256,24 +218,24 @@
 13996414,SAFARI SUITE,83595953,Real Escape,,South Linden,40.00605698637624,-82.97296100923452,Entire home/apt,90,1,58,2018-06-24,2.32,2,172\n\
 14005588,Your Wooded Guest House in the City,27670450,Martha,,Clintonville,40.07338047368801,-83.0053342835264,Entire home/apt,93,3,58,2018-07-14,2.50,1,82\n\
 14042295,Short North Carriage House,483306,Audra & Lacey,,Near North/University,39.98473824060198,-83.00261532779105,Entire home/apt,100,1,260,2018-08-08,11.08,3,152\n\
-14150707,Prime Clintonville Location, 1BR, private bath,10567407,Tracey And Larry,,Clintonville,40.035195469763465,-83.02345749755537,Private room,55,1,64,2018-08-12,2.56,1,54\n\
+14150707,"Prime Clintonville Location, 1BR, private bath",10567407,Tracey And Larry,,Clintonville,40.035195469763465,-83.02345749755537,Private room,55,1,64,2018-08-12,2.56,1,54\n\
 14183383,Grand Carriage House Near downtown,14593654,Katie,,Near East,39.96615788231937,-82.96988541365441,Entire home/apt,86,1,114,2018-08-11,4.82,1,193\n\
 14245905,Bucolic loveliness in the middle of the city,4114228,David,,Near East,39.97131683950825,-82.95033109679866,Entire home/apt,150,1,30,2018-07-21,3.08,2,50\n\
-14262378,Cozy, Quaint Short North Studio close to OSU Stad,14759634,Leisa,,Near North/University,39.98830937802653,-83.00929951131599,Entire home/apt,99,1,92,2018-07-29,3.73,1,70\n\
+14262378,"Cozy, Quaint Short North Studio close to OSU Stad",14759634,Leisa,,Near North/University,39.98830937802653,-83.00929951131599,Entire home/apt,99,1,92,2018-07-29,3.73,1,70\n\
 14280220,Next to all the action! 30 sec walk to Short North,29506288,Eric,,Near North/University,39.979858867687696,-83.00504735385988,Entire home/apt,95,1,155,2018-08-01,6.34,7,57\n\
-14319863,1880 Historic Apartment, Short North, 3 Bedroom,27439453,Ingrid & Mike,,Near North/University,39.98818623286098,-83.00752842298726,Entire home/apt,135,1,101,2018-07-29,4.13,9,98\n\
+14319863,"1880 Historic Apartment, Short North, 3 Bedroom",27439453,Ingrid & Mike,,Near North/University,39.98818623286098,-83.00752842298726,Entire home/apt,135,1,101,2018-07-29,4.13,9,98\n\
 14322001,PRIVATE SAFARI,83595953,Real Escape,,South Linden,40.00791273299501,-82.97320230932718,Private room,40,1,0,,,2,82\n\
 14347236,Private Room/New House ! 15 min To Airport !!,87368949,Juliana,,Far East,39.98962357528852,-82.83666050685385,Private room,38,1,50,2018-08-13,7.81,2,250\n\
 14356430,Cozy bedroom in heart of the city,88006238,Bonnie,,Near East,39.97625747196675,-82.94793584799811,Private room,37,1,11,2018-08-15,0.84,4,98\n\
-14373449,Quiet, clean peaceful stay with full breakfast,21780254,Jody,,Near South,39.936075776861976,-82.95267303752388,Private room,50,1,65,2018-08-04,2.72,3,262\n\
-14373673,Welcoming room near Easton, airport, and downtown,88207499,Alison,,Northeast,40.01414293701219,-82.9352899333142,Private room,41,1,206,2018-08-13,8.42,1,343\n\
-14425189,Clean, neat and in the Short North!,6466841,Linda,,Near North/University,39.97884614698707,-83.00646594960516,Entire home/apt,140,2,2,2017-06-19,0.10,5,324\n\
+14373449,"Quiet, clean peaceful stay with full breakfast",21780254,Jody,,Near South,39.936075776861976,-82.95267303752388,Private room,50,1,65,2018-08-04,2.72,3,262\n\
+14373673,"Welcoming room near Easton, airport, and downtown",88207499,Alison,,Northeast,40.01414293701219,-82.9352899333142,Private room,41,1,206,2018-08-13,8.42,1,343\n\
+14425189,"Clean, neat and in the Short North!",6466841,Linda,,Near North/University,39.97884614698707,-83.00646594960516,Entire home/apt,140,2,2,2017-06-19,0.10,5,324\n\
 14429732,The Judges Mansion: Mid Century Modern Suite,323706,Courtnee,,Near East,39.96375045530908,-82.96605480930859,Private room,56,1,201,2018-08-03,8.29,3,4\n\
 14554528,The Rosewater House - Short North & Ohio State,90103906,Zach And Shoshanna,,Near North/University,39.99300734072441,-83.00023827047966,Entire home/apt,350,2,135,2018-08-12,5.84,2,164\n\
 14570060,The little church on the alley,90262482,Judy,,Franklinton,39.960940398951465,-83.04108392639911,Entire home/apt,90,4,87,2018-08-15,4.02,1,61\n\
 14573940,#3 OSU Campus Near Iuka Ravine,39662644,Paul,,Near North/University,40.0055861148216,-82.99883735621762,Private room,75,1,6,2018-08-09,0.38,9,240\n\
 14595365,#2 OSU Campus Near Iuka Ravine,39662644,Paul,,Near North/University,40.00393563619293,-82.99826323821178,Private room,75,1,6,2018-03-25,0.27,9,296\n\
-14603094,Master Room w Private Bath, SmartHouse Cafe+Stay,312283,Stawn,,Near South,39.94711866657687,-82.9761165775007,Private room,46,1,80,2018-08-14,3.96,3,320\n\
+14603094,"Master Room w Private Bath, SmartHouse Cafe+Stay",312283,Stawn,,Near South,39.94711866657687,-82.9761165775007,Private room,46,1,80,2018-08-14,3.96,3,320\n\
 14637285,★2 Beds★Laundry★Walk to OSU★Kitchen★Renovated★Bus★,41002453,Jerry,,Near North/University,40.00814657980928,-82.99883210626533,Private room,28,1,110,2018-08-13,4.60,8,342\n\
 14637360,★Restored★Laundry ★FreeParking★OSU★Bus/Walk★2Bath★,41002453,Jerry,,Near North/University,40.00866802343394,-82.99875541295629,Private room,39,1,134,2018-08-06,5.58,8,328\n\
 14773242,Miss Paula's B&B,46153893,Paula,,Northland,40.07533510905161,-82.99875218132938,Entire home/apt,67,1,168,2018-08-14,9.90,1,314\n\
@@ -286,25 +248,25 @@
 14901086,Sweet Little Room off I-71 @ I-270,93547897,Chantal-Marie,,Northland,40.10194357511275,-82.98040834253702,Private room,33,1,41,2018-08-10,2.95,2,26\n\
 14912693,Dapper Downtown Diggs!,82341129,Justin,,Near South,39.95251680185648,-82.98788461084041,Entire home/apt,95,1,124,2018-08-06,6.58,3,334\n\
 14912750,German Village gem close to it all!,82341129,Justin,,Near South,39.950495172489546,-82.98723316786491,Entire home/apt,95,1,185,2018-08-06,7.87,3,316\n\
-14928551,Iuka Ravine I, 6 Bed, 1.5 Bath, Near Maphre & OSU,27439453,Ingrid & Mike,,Near North/University,40.00682383390552,-82.99745998557242,Entire home/apt,200,1,73,2018-08-12,3.34,9,169\n\
+14928551,"Iuka Ravine I, 6 Bed, 1.5 Bath, Near Maphre & OSU",27439453,Ingrid & Mike,,Near North/University,40.00682383390552,-82.99745998557242,Entire home/apt,200,1,73,2018-08-12,3.34,9,169\n\
 14949691,Beautiful spacious suite with gym.,42144583,Jason,,Near North/University,39.982223262181584,-82.99613647763883,Private room,70,1,34,2018-07-17,1.47,1,305\n\
 14975439,Short North Loft with Parking,47052293,Annette,,Near North/University,39.97702887876,-82.99905330569088,Entire home/apt,126,1,162,2018-08-10,7.02,4,119\n\
 15005616,Spacious 1 Bedroom Apartment Near OSU and Dowtown,94666498,Corey,,Near North/University,39.996695761059456,-82.99836492861715,Entire home/apt,90,1,23,2018-07-08,1.01,1,116\n\
 15006707,Punta Hideaway,33532725,Brandon,,Near North/University,39.98407979995047,-82.9999567931123,Entire home/apt,90,1,167,2018-07-31,7.20,1,62\n\
-15008883,Unique 4 Bed Short North Home, 2.5 Bath, Sleeps 10,27439453,Ingrid & Mike,,Near North/University,39.97909892464078,-83.00101557312756,Entire home/apt,299,1,90,2018-08-11,3.91,9,60\n\
-15017759,Sweet Suite in Historic Woodland Park, downtown,28929522,Annette And TJ,,Near East,39.96966868757587,-82.96115569543676,Entire home/apt,145,2,18,2018-08-05,0.79,2,246\n\
+15008883,"Unique 4 Bed Short North Home, 2.5 Bath, Sleeps 10",27439453,Ingrid & Mike,,Near North/University,39.97909892464078,-83.00101557312756,Entire home/apt,299,1,90,2018-08-11,3.91,9,60\n\
+15017759,"Sweet Suite in Historic Woodland Park, downtown",28929522,Annette And TJ,,Near East,39.96966868757587,-82.96115569543676,Entire home/apt,145,2,18,2018-08-05,0.79,2,246\n\
 15028474,2 Bedroom house- Central Columbus! Housepitality.,26958698,Benjamin,,North Linden,40.01738952385864,-82.99374272168677,Entire home/apt,109,1,148,2018-08-05,6.40,12,25\n\
 15051563,Guest room available in German Village Apartment,28693178,Jessica,,Near South,39.94713156626798,-82.98661816694475,Private room,70,1,6,2018-07-20,0.34,1,82\n\
 15086255,Cozy Condo by Polaris Mall and Chase Building,95472817,Branden,,Far North,40.15045191577304,-83.0009508683277,Private room,40,2,59,2018-08-12,2.59,1,156\n\
 15150071,Olde Towne East Private Room,20368544,Al,,Near East,39.95997858537882,-82.96992744647349,Private room,75,1,1,2018-03-04,0.18,2,177\n\
 15209057,4th Street Apartments,24032402,Eran,,Near North/University,40.00942291113201,-82.99792440716062,Entire home/apt,90,2,41,2018-08-06,1.80,3,145\n\
 15269867,Your OWN private Victorian Village room.,97147811,Nancy,,Near North/University,39.97897009049862,-83.01159775244949,Private room,52,1,157,2018-08-14,6.96,1,307\n\
-15270848,2 Bed, 1 Bath Modern townhouse in the Short North,43543193,Joe,,Near North/University,39.98079950635139,-83.01147738460666,Entire home/apt,179,3,6,2017-10-04,0.35,2,351\n\
+15270848,"2 Bed, 1 Bath Modern townhouse in the Short North",43543193,Joe,,Near North/University,39.98079950635139,-83.01147738460666,Entire home/apt,179,3,6,2017-10-04,0.35,2,351\n\
 15332339,German Village Artist Studio,56079165,Steve,,Near South,39.95041990903705,-82.98751727820725,Entire home/apt,65,2,56,2018-08-03,3.17,1,284\n\
-15334827,QUIET and COZY HOME, EVERYTHING NEW,35426465,Karen,,Clintonville,40.063376728448915,-83.02556829204738,Entire home/apt,75,1,154,2018-08-10,7.11,4,155\n\
+15334827,"QUIET and COZY HOME, EVERYTHING NEW",35426465,Karen,,Clintonville,40.063376728448915,-83.02556829204738,Entire home/apt,75,1,154,2018-08-10,7.11,4,155\n\
 15339866,German Village Perfect!,92784619,Tony,,Near South,39.94975753674976,-82.98690222153289,Entire home/apt,119,2,55,2018-07-21,2.57,1,286\n\
 15372709,3-Story Brownstone - BEXLEY/near Downtown,1502816,Mark,,Eastland/Brice,39.93137038219757,-82.91905722041177,Entire home/apt,139,1,92,2018-08-10,4.08,2,217\n\
-15393760,Private clean, quite room and bath in a safe area.,98453972,Johnny & Lisa,,Far North,40.11741504257004,-82.9768597580348,Private room,60,3,20,2018-03-21,1.14,1,344\n\
+15393760,"Private clean, quite room and bath in a safe area.",98453972,Johnny & Lisa,,Far North,40.11741504257004,-82.9768597580348,Private room,60,3,20,2018-03-21,1.14,1,344\n\
 15436862,Short Walk to the Short North - Large 1 BR Condo!,57016014,Eric,,Near North/University,39.978255076247855,-83.01911946929047,Entire home/apt,140,1,26,2018-08-11,1.20,1,35\n\
 15478932,Converted Historic Railroad House,92809656,Anthony,,Near South,39.93405157108526,-82.99040659184145,Entire home/apt,79,1,74,2018-07-29,3.35,1,335\n\
 15492587,Short North Cozy Room,26073351,Ryan,,Near North/University,39.97551973918368,-83.00936296567491,Private room,54,1,92,2018-07-31,5.45,3,149\n\
@@ -313,24 +275,24 @@
 15509274,Columbus Comfort. Close to all top attractions !!,57247068,Rue,,Hilltop,39.95112246390937,-83.07885671912663,Entire home/apt,300,1,25,2018-08-13,2.25,2,327\n\
 15552200,Short North Apartment just steps from ~EVERYTHING!,4418841,Anton,,Near North/University,39.98684397004277,-83.0078041613092,Entire home/apt,95,2,60,2018-08-13,2.77,1,130\n\
 15558053,2 Bedroom Perfect Location,60963112,K,,Eastmoor/Walnut Ridge,39.94526823119724,-82.934349780497,Entire home/apt,90,1,14,2018-07-29,0.97,1,20\n\
-15578985,5 star for a reason!  Clean, quiet, convenient!,30375607,Cory,,Clintonville,40.06502026644194,-83.01495812154654,Private room,35,1,64,2018-08-14,2.91,1,8\n\
-15611181,Cozy private bedroom  & bathroom in Dublin, Ohio,74021630,Limi,,Hayden Run,40.06918904407057,-83.15215636839797,Private room,50,1,71,2018-08-12,3.25,1,76\n\
+15578985,"5 star for a reason!  Clean, quiet, convenient!",30375607,Cory,,Clintonville,40.06502026644194,-83.01495812154654,Private room,35,1,64,2018-08-14,2.91,1,8\n\
+15611181,"Cozy private bedroom  & bathroom in Dublin, Ohio",74021630,Limi,,Hayden Run,40.06918904407057,-83.15215636839797,Private room,50,1,71,2018-08-12,3.25,1,76\n\
 15648732,Hidden Treasure,78459094,Lamar,,Near East,39.958966523780944,-82.96025429533323,Private room,38,1,6,2018-08-10,0.42,2,355\n\
 15663746,Short North Condo,38035394,Kendra,,Near North/University,39.97716694563375,-83.00445279953212,Private room,200,1,4,2018-05-21,0.53,1,88\n\
 15705912,Spacious One Bedroom  in Short North near OSU,14397907,Bernard,,Near North/University,39.98072128698877,-83.00350917057416,Entire home/apt,105,1,53,2018-07-30,2.55,3,314\n\
 15757272,Delux First Floor Apartment in Olde Towne East,1583338,Jay & Michael,,Near East,39.966821048785114,-82.96286433813336,Entire home/apt,95,2,50,2018-07-29,2.34,2,265\n\
 15764235,The Davis Air BnB -Private Bedroom,13079659,Marla,,Clintonville,40.02818454304333,-83.01275930926477,Private room,60,1,2,2017-09-10,0.09,1,74\n\
 15764634,QUIET Space close to EVERYTHING!,35426465,Karen,,Clintonville,40.06322237914829,-83.02575961771153,Entire home/apt,35,1,13,2018-08-06,0.65,4,220\n\
-15765335,Large, Comfortable, and QUIET.,35426465,Karen,,Clintonville,40.064799090151205,-83.0265589066487,Entire home/apt,50,1,5,2018-05-27,0.25,4,222\n\
+15765335,"Large, Comfortable, and QUIET.",35426465,Karen,,Clintonville,40.064799090151205,-83.0265589066487,Entire home/apt,50,1,5,2018-05-27,0.25,4,222\n\
 15791947,THE SIELTH RETREAT- DOWNTOWN,51086315,Siobhan,,Near South,39.953380801782814,-82.96467395547994,Private room,23,1,53,2018-07-29,2.70,3,74\n\
 15801467,Comfy room close to Easton and airport!,998432,Cynthia,,Eastmoor/Walnut Ridge,39.97465686125873,-82.91693815255401,Private room,38,1,117,2018-08-01,5.44,2,118\n\
-15832509,MERION VILLAGE, COLUMBUS: WHITE FARMHOUSE,11917334,Todd,,Near South,39.933717509772734,-82.98582501067274,Entire home/apt,159,2,71,2018-08-05,3.32,2,302\n\
-15883347,Safe, Roomy Studio-booking includes salt spa visit,877959,Elizabeth,,Clintonville,40.03562781969469,-83.01700437822012,Entire home/apt,96,2,52,2018-05-28,2.48,1,131\n\
+15832509,"MERION VILLAGE, COLUMBUS: WHITE FARMHOUSE",11917334,Todd,,Near South,39.933717509772734,-82.98582501067274,Entire home/apt,159,2,71,2018-08-05,3.32,2,302\n\
+15883347,"Safe, Roomy Studio-booking includes salt spa visit",877959,Elizabeth,,Clintonville,40.03562781969469,-83.01700437822012,Entire home/apt,96,2,52,2018-05-28,2.48,1,131\n\
 15928339,Cozy house near German Village and Downtown,100760398,Philip,,Near South,39.93378101600857,-82.98789709679693,Private room,45,1,91,2018-07-24,4.36,1,85\n\
 15929897,Guest Suite @ OSU & Short North,52174539,Nat,,Near North/University,39.98884133336315,-83.01048370949232,Entire home/apt,65,1,190,2018-08-12,10.07,3,125\n\
 15966488,Sleeping in the City,103700433,Erin,,Downtown,39.956327769661065,-82.99387174372411,Entire home/apt,89,1,91,2018-08-10,4.50,3,76\n\
 15972142,Luxury Street Level Apartment,70413293,STR Capital,,Northland,40.062234526099935,-82.9115204003608,Entire home/apt,100,1,89,2018-07-26,4.25,8,143\n\
-15988515,Relaxing, Quiet, Pristine Bedroom/Private BR,103896042,Marlene,,Hayden Run,40.067775384712704,-83.17347438484894,Private room,60,1,66,2018-08-11,3.19,1,166\n\
+15988515,"Relaxing, Quiet, Pristine Bedroom/Private BR",103896042,Marlene,,Hayden Run,40.067775384712704,-83.17347438484894,Private room,60,1,66,2018-08-11,3.19,1,166\n\
 15998966,MnB in GV,103990873,Monique & Brian,,Near South,39.951631578886975,-82.99586888332176,Entire home/apt,90,1,111,2018-07-29,5.75,4,331\n\
 16041611,Lovely South Columbus/Casino Minutes Away,104404457,Carletta,,Rickenbacker,39.86644448412038,-82.99124605097136,Private room,275,1,0,,,2,362\n\
 16048771,Beautiful Brewery District Apartment,6164720,Lucas And Alex,,Near South,39.94584942410492,-82.99993913235194,Entire home/apt,85,2,7,2018-03-05,0.33,1,129\n\
@@ -354,18 +316,18 @@
 16829459,The ORANGE AP(PEEL),78459094,Lamar,,Near East,39.96105879904184,-82.95943483331622,Private room,28,1,58,2018-07-29,4.09,2,341\n\
 16831270,COMMONS STUDIO DOWNTOWN - Blanket Forts Encouraged,43116517,Matt,,Downtown,39.957709696084386,-82.99895542603791,Shared room,150,1,6,2017-10-08,0.36,1,89\n\
 16841815,Cozy Buckeye Cottage,49421637,Jerry,,Hilltop,39.94554895974108,-83.08129839685115,Private room,23,1,12,2018-08-04,0.64,4,13\n\
-16872653,Small Suite w Shared Bath, SmartHouse Cafe+Stay,312283,Stawn,,Near South,39.9464594191728,-82.97649269548647,Private room,32,1,191,2018-08-01,10.40,3,257\n\
+16872653,"Small Suite w Shared Bath, SmartHouse Cafe+Stay",312283,Stawn,,Near South,39.9464594191728,-82.97649269548647,Private room,32,1,191,2018-08-01,10.40,3,257\n\
 16974049,Short North 2 bed/2 bath apt. w/Balcony & Parking,71666929,August,,Near North/University,39.982356840566766,-83.0051960684134,Entire home/apt,125,1,151,2018-08-07,10.49,3,294\n\
 17071735,3rd Floor Suite in Historic Home on Goodale Park,114502307,Jeff,,Near North/University,39.97848457270242,-83.00971517708193,Entire home/apt,125,2,40,2018-07-29,2.27,2,18\n\
 17107263,Spacious Room on Private Floor in Short North,107306080,Rania,,Near North/University,39.984496898058836,-83.00016782315393,Private room,52,1,43,2018-08-10,2.36,2,40\n\
 17118112,German Village/Schumacher Place attic space,115003289,Poorvi Priya,,Near South,39.94697520343937,-82.98592717962055,Private room,70,1,14,2018-07-24,0.83,1,48\n\
-17152834,Medium Suite w Shared Bath, SmartHouse Cafe+Stay,312283,Stawn,,Near South,39.94721494796262,-82.9751589005289,Private room,36,1,104,2018-07-31,5.89,3,283\n\
+17152834,"Medium Suite w Shared Bath, SmartHouse Cafe+Stay",312283,Stawn,,Near South,39.94721494796262,-82.9751589005289,Private room,36,1,104,2018-07-31,5.89,3,283\n\
 17265759,Historic Carriage House - Short North / Downtown,116400313,Nate,,Near North/University,39.97737336297634,-83.00653225406569,Entire home/apt,190,2,40,2018-08-06,2.31,9,166\n\
 17295941,International Scholars House near OSU.LR,61721336,Sandy,,Near North/University,40.01246719512805,-83.01176306178102,Private room,40,3,1,2017-06-03,0.07,4,15\n\
 17295993,Walk to Ohio State University,61721336,Sandy,,Near North/University,40.01250145795147,-83.01346597331656,Private room,35,5,9,2018-05-20,0.51,4,2\n\
 17297033,Blue Cat Cottage - Near the Airport and Easton!,998432,Cynthia,,Eastmoor/Walnut Ridge,39.976872049549556,-82.91363271626615,Entire home/apt,80,1,104,2018-07-31,5.89,2,305\n\
 17300142,Relaxing oasis in south Columbus -Housepitality,26958698,Benjamin,,Hilltop,39.92817748637672,-83.11071540354322,Entire home/apt,199,1,106,2018-08-03,6.00,12,110\n\
-17365804,Urban II, Short North-area, 3 Bed Duplex, Sleeps 9,27439453,Ingrid & Mike,,Near North/University,39.9888603573803,-83.00048209793049,Entire home/apt,125,1,76,2018-08-12,4.25,9,357\n\
+17365804,"Urban II, Short North-area, 3 Bed Duplex, Sleeps 9",27439453,Ingrid & Mike,,Near North/University,39.9888603573803,-83.00048209793049,Entire home/apt,125,1,76,2018-08-12,4.25,9,357\n\
 17432073,Historic Circus House on Goodale Park,117933206,Weston,,Near North/University,39.97602143776714,-83.00927517585393,Entire home/apt,185,2,97,2018-08-08,5.55,1,219\n\
 17432098,Buckeye Fans - This is perfect for you!,117812580,Chelsea,,Far North,40.120198193168896,-83.01481690742456,Entire home/apt,85,2,69,2018-08-12,3.90,1,148\n\
 17455574,German Village -  Beakerloo Apt B,42309439,Lucy & Brent,,Near South,39.943664317033715,-82.9925756372965,Entire home/apt,125,1,101,2018-08-13,5.72,2,300\n\
@@ -374,9 +336,9 @@
 17583844,Convenient Casa - 1 or 2 Bedroom Option,60241756,Thomas,,Hayden Run,40.06167215965901,-83.17740153383015,Private room,45,1,17,2018-05-21,1.03,1,177\n\
 17592387,Short North Home in the center of it all!,26073351,Ryan,,Near North/University,39.97552454133387,-83.01061958139704,Private room,119,1,8,2018-03-16,0.56,3,145\n\
 17613591,Clintonville coziness,119738605,Carey,,Clintonville,40.028625313190496,-83.00970339588942,Entire home/apt,70,1,11,2018-08-05,0.71,1,358\n\
-17681523,Comfy home near OSU, Dublin, Worthington,76628675,Jake,,Far Northwest,40.107612598081076,-83.07119536310829,Entire home/apt,90,2,51,2018-08-11,3.18,4,344\n\
+17681523,"Comfy home near OSU, Dublin, Worthington",76628675,Jake,,Far Northwest,40.107612598081076,-83.07119536310829,Entire home/apt,90,2,51,2018-08-11,3.18,4,344\n\
 17702442,Divas Den,104393320,Mona,,Clintonville,40.04585436426195,-83.03181759791372,Private room,45,1,1,2018-05-17,0.33,1,194\n\
-17720772,Large, Luxury Home in ❤️ of Merion Village!,73100688,Shaun,,Near South,39.9310779601035,-82.98723355819176,Entire home/apt,100,2,62,2018-08-14,6.50,1,319\n\
+17720772,"Large, Luxury Home in ❤️ of Merion Village!",73100688,Shaun,,Near South,39.9310779601035,-82.98723355819176,Entire home/apt,100,2,62,2018-08-14,6.50,1,319\n\
 17728482,* Italian Village Guest House *,114505182,William,,Near North/University,39.9756696897993,-83.00241350690716,Entire home/apt,190,2,65,2018-07-23,3.82,1,155\n\
 17787821,Music Manor on Madison!,11055025,Megan,,Near East,39.96384946187933,-82.96828485390404,Private room,55,2,16,2018-05-22,1.01,1,90\n\
 17791756,Short North 4 Bedroom House,28695156,Miles,,Near North/University,39.978342029062006,-83.00000385747298,Entire home/apt,350,1,46,2018-07-30,3.05,4,349\n\
@@ -385,14 +347,14 @@
 18122748,Home Away From Home,124883671,Renee,,Near East,39.97754238611782,-82.96869237195268,Entire home/apt,75,1,34,2018-07-29,2.18,1,74\n\
 18131334,Lovely South Palace,104404457,Carletta,,Far South,39.90862513719168,-82.92854970678097,Shared room,270,1,0,,,2,83\n\
 18173844,German Village / Brewery District,41648795,Kevin,,Near South,39.942489782455276,-82.99802381166124,Private room,60,2,17,2018-07-24,1.22,1,87\n\
-18194309,Newly renovated, quiet and relaxing.,90446284,Curtis,,Rocky Fork-Blacklick,40.058421268687184,-82.88044776658951,Private room,49,1,22,2018-08-10,1.39,1,0\n\
+18194309,"Newly renovated, quiet and relaxing.",90446284,Curtis,,Rocky Fork-Blacklick,40.058421268687184,-82.88044776658951,Private room,49,1,22,2018-08-10,1.39,1,0\n\
 18222598,Bustling Brewery District Bungalo!,82341129,Justin,,Near South,39.94448344098112,-82.99830543558423,Entire home/apt,131,1,103,2018-08-06,7.04,3,329\n\
 18237074,Stylish & Spacious Townhouse Right By OSU Campus,63058233,Hometeam,,Near North/University,39.99146052885716,-83.01156356808248,Entire home/apt,400,1,22,2018-07-08,1.41,1,0\n\
 18375624,Cozy & clean bedroom w/ en suite bathroom,63794975,Xiao-Li  (Sounds Like Zolee),,Far North,40.132466696077124,-83.01926126060197,Private room,55,1,31,2018-07-07,2.05,1,361\n\
 18416169,Charming Condo in Short North,6475378,Guanyi,,Near North/University,39.990134934777025,-83.00926391642787,Private room,25,1,19,2018-04-01,1.43,1,13\n\
 18423193,New host in canal,127671768,Jessica,,Southeast,39.883248419885675,-82.82963042619598,Entire home/apt,270,1,0,,,1,89\n\
 18448687,The Roost,127897070,Robert,,Eastland/Brice,39.90805560039039,-82.81325067375639,Entire home/apt,85,1,12,2018-06-01,0.79,1,196\n\
-18448855,Eclectic 1880s Historic, Short North area, 4 Beds,27439453,Ingrid & Mike,,Near North/University,39.98822526281583,-83.0076295109358,Entire home/apt,150,1,68,2018-08-05,4.43,9,103\n\
+18448855,"Eclectic 1880s Historic, Short North area, 4 Beds",27439453,Ingrid & Mike,,Near North/University,39.98822526281583,-83.0076295109358,Entire home/apt,150,1,68,2018-08-05,4.43,9,103\n\
 18488858,Short North Private Lower Level with Parking,103112768,Lauryn,,Near North/University,39.989170228207584,-83.0015469479987,Private room,45,1,44,2018-07-31,2.81,1,42\n\
 18527475,Short North Single Home Rental,15379299,Margaret,,Near North/University,39.988722561146794,-83.00676966495955,Entire home/apt,200,1,85,2018-08-15,5.54,1,35\n\
 18535724,Private queen bedroom - N. Campus,2350409,Eddie,,Near North/University,40.01113629784005,-83.00971218109312,Private room,34,7,5,2017-09-10,0.32,4,42\n\
@@ -401,16 +363,16 @@
 18566857,Mo!,103990873,Monique & Brian,,Near South,39.95262534191649,-82.99703682116336,Entire home/apt,125,1,30,2018-07-29,2.12,4,336\n\
 18567095,Dublin Couch Bed,128903772,Christopher,,Northwest,40.08588370775262,-83.09523683255007,Shared room,75,1,0,,,1,90\n\
 18577026,Cozy Townhome Next to OSU and Short North,52670347,Pat,,Near North/University,39.99018176919298,-83.00738872404281,Entire home/apt,125,2,84,2018-08-12,5.66,3,137\n\
-18585597,Charming, Cozy and Spacious Apartment,62376988,Cynthia,,Eastmoor/Walnut Ridge,39.961589639644416,-82.91074134712174,Entire home/apt,100,3,6,2018-06-17,0.63,1,166\n\
+18585597,"Charming, Cozy and Spacious Apartment",62376988,Cynthia,,Eastmoor/Walnut Ridge,39.961589639644416,-82.91074134712174,Entire home/apt,100,3,6,2018-06-17,0.63,1,166\n\
 18630080,Affordable Stay In The Historic German Village,95046685,Ryan,,Near South,39.9510914272635,-82.99214377431188,Entire home/apt,89,2,21,2018-08-12,1.39,1,8\n\
 18631993,Short North Studio Apt. w/Off-street Parking,71666929,August,,Near North/University,39.982927335273175,-83.00524451962423,Entire home/apt,96,1,123,2018-08-13,12.06,3,289\n\
 18735741,City Vibe (Short North/Victorian Village),51970180,Eric,,Near North/University,39.976695623850205,-83.01043574401959,Private room,89,1,64,2018-08-05,4.37,1,120\n\
 18754945,Grandview Post-War Charmer,106768476,Tom And Sara,,West Olentangy,39.99114513289657,-83.03757081199475,Entire home/apt,120,2,53,2018-08-07,3.48,1,135\n\
-18768075,Modern Ranch, WiFi, Garage, 55TV, Roku, Huge Yard,33532441,Alex,,Eastmoor/Walnut Ridge,39.93760965998043,-82.91469190918039,Entire home/apt,95,2,37,2018-08-14,2.45,2,320\n\
+18768075,"Modern Ranch, WiFi, Garage, 55""TV, Roku, Huge Yard",33532441,Alex,,Eastmoor/Walnut Ridge,39.93760965998043,-82.91469190918039,Entire home/apt,95,2,37,2018-08-14,2.45,2,320\n\
 18772188,Urban Castle,46233986,Mark,,Downtown,39.965530583494896,-82.99820720560224,Entire home/apt,400,2,10,2018-07-28,1.82,1,174\n\
 18789892,Eagle Nest,130779067,Elena,,Far North,40.1298501361794,-82.99079436476654,Private room,49,1,0,,,1,86\n\
 18802242,Downtown Columbus Convenient & Relaxed Location!,117536730,Jason,,Near South,39.94619240040048,-82.97840880283388,Private room,34,1,26,2018-07-17,1.75,1,128\n\
-18842852,Short North Cozy, Clean Studio- Parking Included,99874408,Neriana,,Near North/University,39.97550483135341,-83.00236468907711,Entire home/apt,82,1,91,2018-08-12,6.32,1,143\n\
+18842852,"Short North Cozy, Clean Studio- Parking Included",99874408,Neriana,,Near North/University,39.97550483135341,-83.00236468907711,Entire home/apt,82,1,91,2018-08-12,6.32,1,143\n\
 18893274,Ramona's Hideaway,114371691,Tim,,Near East,39.95971440879208,-82.98013532349573,Private room,159,1,70,2018-08-12,5.20,1,146\n\
 18930516,Goodale Park Carriage House - heart of Short North,114502307,Jeff,,Near North/University,39.977038927498604,-83.0087565467836,Entire home/apt,109,1,120,2018-08-13,8.53,2,314\n\
 18975833,Spacious Bedroom and Private Ensuite Bathroom.,2872337,Ryan,,Near North/University,39.98636123263254,-83.00390473722197,Private room,45,1,87,2018-07-29,5.95,2,346\n\
@@ -430,7 +392,7 @@
 19182562,Private Bedroom & En-suite Bathroom/AC/TV/Near OSU,65293434,Yahyahan,,West Olentangy,40.030330284640115,-83.02778331561485,Private room,35,1,96,2018-08-10,6.67,2,0\n\
 19183032,Triple Private Room at the Hostel,4965048,Mathew,,Near North/University,40.012933887884245,-83.0023801436618,Private room,70,1,7,2018-07-20,0.73,7,324\n\
 19183954,Family Room at the Hostel,4965048,Mathew,,Near North/University,40.013529631601216,-83.00133612816302,Private room,113,1,4,2018-07-22,0.37,7,344\n\
-19246435,Immaculate one bed, one bath Apartment,112939776,Evan,,Near North/University,40.013317025960646,-83.01321529096319,Entire home/apt,150,2,23,2018-05-20,1.66,2,125\n\
+19246435,"Immaculate one bed, one bath Apartment",112939776,Evan,,Near North/University,40.013317025960646,-83.01321529096319,Entire home/apt,150,2,23,2018-05-20,1.66,2,125\n\
 19249742,Cottage on City Park Loft w/Massage Chair Red Room,49421637,Jerry,,Hilltop,39.94541471189579,-83.08156262593589,Private room,38,1,86,2018-08-12,6.06,4,355\n\
 19264606,Bedroom and Private Bathroom,2872337,Ryan,,Near North/University,39.986615900188106,-83.00385776058998,Private room,69,1,52,2018-08-01,3.66,2,358\n\
 19267670,The White Squirrel Inn,73407226,Jeremy,,Near North/University,39.98229288927315,-83.01149309756718,Entire home/apt,125,2,63,2018-08-12,5.34,1,292\n\
@@ -441,7 +403,7 @@
 19362686,Cozy Two-Bedroom Home at Schiller Park,135282307,William,,Near South,39.94108349232667,-82.9934675870527,Entire home/apt,150,2,15,2018-08-06,1.10,1,17\n\
 19365515,Bright and airy 1 BDR Apartment close to Downtown,19532241,Tawana,,Near East,39.96423618013796,-82.9761142527032,Entire home/apt,85,1,5,2018-08-08,0.65,2,63\n\
 19412698,Perfect Short North Location - Steps to High St!,9152651,Jon,,Near North/University,39.98102656472654,-83.003754535077,Entire home/apt,125,1,58,2018-08-12,4.63,13,255\n\
-19413241,Short North Town Home, Right off High Street,125943733,Joe,,Near North/University,39.986496913331386,-83.00526220797184,Entire home/apt,105,1,163,2018-08-13,12.10,3,277\n\
+19413241,"Short North Town Home, Right off High Street",125943733,Joe,,Near North/University,39.986496913331386,-83.00526220797184,Entire home/apt,105,1,163,2018-08-13,12.10,3,277\n\
 19438854,Cozy home close to downtown and OSU,136287304,Brian,,West Scioto,39.989643463369994,-83.08783059492967,Private room,50,1,48,2018-08-10,4.62,1,84\n\
 19468469,4th Street Apartments 7,24032402,Eran,,Near North/University,40.00953656301073,-82.99809601919712,Entire home/apt,85,2,28,2018-07-29,2.08,3,263\n\
 19469926,Short North/Central Italian Village Home,35241426,Kevin And Megan,,Near North/University,39.9794397555596,-83.00122579626455,Entire home/apt,450,1,16,2018-08-06,1.34,2,327\n\
@@ -453,18 +415,18 @@
 19619901,Private Room Near OSU D2,75437280,Azubair,,Near North/University,40.00695591259616,-83.00002166582448,Private room,41,1,86,2018-07-19,6.39,1,0\n\
 19656685,Private room in our home near OSU campus,4139952,William,,Near North/University,40.01019128985563,-82.99672574553314,Private room,35,1,9,2018-08-05,0.85,2,15\n\
 19679998,German Village area home,138599343,Thomas,,Near South,39.94302792682919,-82.98454961396781,Entire home/apt,32,7,7,2018-05-20,0.53,1,147\n\
-19680984,Beautiful Contemporary Room,Private Bath,Dublin,OH,126844149,Johnny,,Hayden Run,40.06659641313269,-83.15055738097833,Private room,55,1,22,2018-06-23,1.70,1,17\n\
+19680984,"Beautiful Contemporary Room,Private Bath,Dublin,OH",126844149,Johnny,,Hayden Run,40.06659641313269,-83.15055738097833,Private room,55,1,22,2018-06-23,1.70,1,17\n\
 19695611,Duncan Street Haven - Remodeled 2 Bedroom,49086324,Sharon,,Near North/University,40.01677706698352,-83.0086789946183,Entire home/apt,135,1,67,2018-08-03,5.66,1,127\n\
 19700416,Peaceful Room off I-71 @ I-270,93547897,Chantal-Marie,,Northland,40.10153124785167,-82.98167429230718,Private room,40,3,10,2018-03-28,0.82,2,27\n\
 19720249,Cozy Private Bdrm Near Old Hilliard,24012236,Cara,,Far West,40.00759823153773,-83.1491067457464,Private room,52,1,16,2018-07-08,1.23,1,244\n\
-19751630,Cozy 2BR, 1.5Bath Home in Columbus,139335945,Samantha,,Westland,39.93749507886486,-83.16084996987144,Entire home/apt,60,1,26,2018-07-23,2.07,1,22\n\
-19781392,Huge New German Village Getaway, Patio, & Fire Pit,9152651,Jon,,Near South,39.945099893202276,-82.98872559080232,Entire home/apt,125,1,67,2018-08-12,5.19,13,255\n\
-19811151,Lovely  2 BR  by bike path, 2 miles to OSU,34871997,Kathy,,Clintonville,40.022658132600895,-83.01827397080665,Entire home/apt,95,2,38,2018-07-30,3.36,1,112\n\
+19751630,"Cozy 2BR, 1.5Bath Home in Columbus",139335945,Samantha,,Westland,39.93749507886486,-83.16084996987144,Entire home/apt,60,1,26,2018-07-23,2.07,1,22\n\
+19781392,"Huge New German Village Getaway, Patio, & Fire Pit",9152651,Jon,,Near South,39.945099893202276,-82.98872559080232,Entire home/apt,125,1,67,2018-08-12,5.19,13,255\n\
+19811151,"Lovely  2 BR  by bike path, 2 miles to OSU",34871997,Kathy,,Clintonville,40.022658132600895,-83.01827397080665,Entire home/apt,95,2,38,2018-07-30,3.36,1,112\n\
 19813596,A Secluded and Tranquil City retreat,139974150,Evette,,West Scioto,39.996347144703186,-83.07845061830373,Private room,70,1,18,2018-08-02,1.56,2,86\n\
 19828526,Home away from home,139703297,Dorothy,,Northland,40.074523019508966,-82.95563245113911,Private room,35,2,15,2018-08-03,1.32,1,336\n\
 19838938,3 Bed Home in Heart of Italian Village/Short North,132674180,Evo,,Near North/University,39.983924725642645,-83.00200108771007,Entire home/apt,197,2,53,2018-08-09,4.08,2,3\n\
 19840029,Historic Studio Loft - Prime Location,31798233,Sam,,Downtown,39.97353046569167,-83.00375846133238,Entire home/apt,145,1,82,2018-08-13,7.37,4,144\n\
-19856651,SHORT NORTH APT, close Convention CNTR, OSU, DWTWN,29506288,Eric,,Near North/University,39.98061190510003,-83.0097186648786,Entire home/apt,65,1,101,2018-07-28,7.63,7,67\n\
+19856651,"SHORT NORTH APT, close Convention CNTR, OSU, DWTWN",29506288,Eric,,Near North/University,39.98061190510003,-83.0097186648786,Entire home/apt,65,1,101,2018-07-28,7.63,7,67\n\
 19859814,Studio with a View,103700433,Erin,,Downtown,39.9575645236336,-82.99389181581071,Entire home/apt,89,1,83,2018-08-09,7.28,3,62\n\
 19861283,Modern Condo  - Heart of Downtown - Parking!,31798233,Sam,,Downtown,39.96370592123539,-82.99662294208471,Entire home/apt,150,2,4,2018-02-28,0.38,4,347\n\
 19862861,Doc's Retreat,1230733,Esther,,Near South,39.94625892321321,-82.97983744844413,Entire home/apt,65,14,9,2018-08-11,0.99,1,254\n\
@@ -474,14 +436,14 @@
 19923750,Bed & Private bath+Instant book,88006238,Bonnie,,Near East,39.97472099689061,-82.94814576843528,Private room,29,1,11,2018-02-03,0.86,4,138\n\
 19928533,NEW - Beautiful Bungalow near OSU/Clintonville,26958698,Benjamin,,North Linden,40.02059345247415,-82.9934677566313,Entire home/apt,130,1,66,2018-08-11,5.81,12,349\n\
 19933024,Brand New House & Huge Patio in German Village,9152651,Jon,,Near South,39.95147513703012,-82.987489883102,Entire home/apt,135,1,76,2018-08-12,6.03,13,242\n\
-19961055,Beautiful, spacious home, walking distance to OSU,72162010,Matthew,,Near North/University,40.01302689894125,-83.01066082204429,Entire home/apt,200,2,10,2018-06-03,0.88,1,326\n\
+19961055,"Beautiful, spacious home, walking distance to OSU",72162010,Matthew,,Near North/University,40.01302689894125,-83.01066082204429,Entire home/apt,200,2,10,2018-06-03,0.88,1,326\n\
 20000599,Finished Basement Space in Columbus Cape Cod,14657799,Emily,,North Linden,40.02766025934606,-82.99236803741533,Private room,50,1,34,2018-08-06,2.80,1,49\n\
 20015830,Comforts of Home -Instant book,88006238,Bonnie,,Near East,39.97611528685225,-82.94820694564386,Private room,39,1,45,2018-08-06,3.52,4,176\n\
 20053350,Franklin Park Hideaway,26958698,Benjamin,,Near East,39.968493733122656,-82.95475467380315,Entire home/apt,109,1,62,2018-08-07,4.97,12,138\n\
 20065692,Olde Towne East Private Bedroom & Bathroom,19810384,Anthony,,Near East,39.960861153128306,-82.9552648638379,Private room,42,1,85,2018-08-14,6.66,1,91\n\
 20076659,Nice little Apartment near OSU Campus,127409216,Arif,,West Olentangy,40.02465003182046,-83.03111511776687,Private room,23,1,77,2018-08-13,6.08,1,345\n\
 20116855,City life and convenience; the comforts of home,4704992,Deb,,Near South,39.932486737185485,-82.99227433345845,Entire home/apt,115,1,21,2018-08-12,1.85,1,85\n\
-20132677,Charming Renovated Duplex, Minutes from Downtown,35045902,Kelly & Eric,,Near South,39.928190063479384,-82.98547163235503,Entire home/apt,146,1,58,2018-08-12,4.99,1,124\n\
+20132677,"Charming Renovated Duplex, Minutes from Downtown",35045902,Kelly & Eric,,Near South,39.928190063479384,-82.98547163235503,Entire home/apt,146,1,58,2018-08-12,4.99,1,124\n\
 20147810,Gracious living on High Street,39004963,Nick,,Near North/University,39.97629193283337,-83.0036595534084,Private room,54,1,58,2018-07-29,4.87,1,4\n\
 20170350,Massive Historic 4BD/3BA House near Short North!,9152651,Jon,,Near North/University,39.986973668282985,-83.00925002529569,Entire home/apt,125,1,49,2018-07-29,4.08,13,243\n\
 20170921,Entire Home near Short North! Perfect Location!,9152651,Jon,,Near North/University,39.982166130480046,-83.01048670865956,Entire home/apt,85,1,41,2018-07-30,3.42,13,262\n\
@@ -497,10 +459,10 @@
 20451291,Enjoy my guest bedroom.,76628675,Jake,,Far Northwest,40.10901095608254,-83.07184992521867,Private room,0,1,1,2017-11-03,0.10,4,75\n\
 20455332,Private Studio Apartment in Short North Arts Area,146011229,Amanda,,Near North/University,39.987936320408465,-83.00794023992064,Entire home/apt,75,1,172,2018-08-10,14.14,1,219\n\
 20456401,Perfect for OSU Fans!!,144300142,Alexandra,,Far North,40.13597152675637,-82.97051817317504,Entire home/apt,110,2,56,2018-08-12,4.84,1,73\n\
-20469877,The OTHER Iuka Ravine II, 6 Bed, 1.5 Bath,27439453,Ingrid & Mike,,Near North/University,40.00489234791745,-82.9976114462162,Entire home/apt,125,1,36,2018-08-12,3.15,9,241\n\
+20469877,"The OTHER Iuka Ravine II, 6 Bed, 1.5 Bath",27439453,Ingrid & Mike,,Near North/University,40.00489234791745,-82.9976114462162,Entire home/apt,125,1,36,2018-08-12,3.15,9,241\n\
 20503445,The Olde Town Home,19515473,James,,Near East,39.95600829282213,-82.97150603035581,Private room,40,1,47,2018-07-05,3.97,1,162\n\
 20553452,Berwick Home Bed and Breakfast,146780746,Victoria,,Eastmoor/Walnut Ridge,39.932940027810176,-82.92125726984965,Private room,55,3,3,2018-05-20,0.26,1,90\n\
-20591118,Clean, quiet private room,126958941,Scott,,Hayden Run,40.060154260739836,-83.1294100121491,Private room,45,1,16,2018-08-11,1.38,1,170\n\
+20591118,"Clean, quiet private room",126958941,Scott,,Hayden Run,40.060154260739836,-83.1294100121491,Private room,45,1,16,2018-08-11,1.38,1,170\n\
 20620942,Tranquil Home Away From Home,35426465,Karen,,Clintonville,40.034136525120616,-83.02268910211309,Entire home/apt,184,1,29,2018-06-24,4.48,4,0\n\
 20634664,Centrally Located 2BR Columbus House!,121719854,Evolve Vacation Rental,,Near North/University,39.984456042283284,-83.00513598991482,Entire home/apt,285,2,4,2018-05-10,0.69,2,318\n\
 20674936,Cozy room,144306145,Geri,,Hayden Run,40.063059308280785,-83.17617538627633,Private room,55,1,15,2018-08-05,1.32,2,174\n\
@@ -520,9 +482,9 @@
 20904201,Cozy Space near OSU campus,31849790,Jessica,,Near North/University,39.99400780369237,-82.99649506484376,Private room,45,2,32,2018-07-15,2.87,1,60\n\
 20915984,Charming Grandview House 2.5 Mi. to Univ. Stadium!,121719854,Evolve Vacation Rental,,West Olentangy,39.985794828662705,-83.042678656471,Entire home/apt,250,2,5,2018-07-08,0.48,2,301\n\
 20932530,Modern Apt in Prime Short North Location,11478396,Richard,,Near North/University,39.97863012733184,-83.00290208626976,Entire home/apt,88,2,28,2018-08-05,2.53,2,90\n\
-20941760,Private Bedroom at the Short North, OSU, Downtown,4781655,Pedro,,Near North/University,39.99281350907153,-83.01246982529628,Private room,39,1,65,2018-07-28,5.86,2,0\n\
+20941760,"Private Bedroom at the Short North, OSU, Downtown",4781655,Pedro,,Near North/University,39.99281350907153,-83.01246982529628,Private room,39,1,65,2018-07-28,5.86,2,0\n\
 20942763,Cozy room in storybook home of OSU grad students,69795936,Jennifer,,Hilltop,39.934728960646076,-83.0763702495002,Private room,20,1,30,2018-07-27,2.75,1,152\n\
-20992589,EVO-2, 3BR home in Weinland Park by OSU, Sleeps 12,132674180,Evo,,Near North/University,39.99177739340515,-82.99578401038144,Entire home/apt,118,2,36,2018-08-11,3.30,2,66\n\
+20992589,"EVO-2, 3BR home in Weinland Park by OSU, Sleeps 12",132674180,Evo,,Near North/University,39.99177739340515,-82.99578401038144,Entire home/apt,118,2,36,2018-08-11,3.30,2,66\n\
 21008624,★ Enchanting Cottage Close to Everything Columbus★,43356889,Quincy,,Clintonville,40.024090343034,-83.00354520193322,Entire home/apt,150,1,45,2018-08-12,4.93,1,311\n\
 21022618,BEAUTIFUL luxury Loft Downtown Columbus!,62908645,Hofit,,Downtown,39.95572018646647,-82.9957158595061,Entire home/apt,90,2,25,2018-08-07,6.05,2,138\n\
 21027268,LUXURY APT With private pool 7 mins from downtown,103352758,Stephanie,,Eastmoor/Walnut Ridge,39.93432019421577,-82.93071014306202,Entire home/apt,68,1,7,2018-07-15,0.67,1,81\n\
@@ -537,15 +499,15 @@
 21151548,Our home in Columbus near OSU!,4139952,William,,Near North/University,40.00825760299631,-82.99760341654007,Entire home/apt,63,2,5,2018-07-01,0.53,2,5\n\
 21186596,Luxury three story apartment in SHORT NORTH,152060241,Milana,,Near North/University,39.98071412404689,-83.00320762843164,Entire home/apt,250,1,28,2018-07-17,2.68,1,172\n\
 21201694,Charming Updated German Village 2BR Townhouse!,9152651,Jon,,Near South,39.95066022487941,-82.99316680952404,Entire home/apt,99,1,33,2018-08-11,3.50,13,264\n\
-21210728,Updated Merion Village Home, with garage parking,102933804,Aaron,,Near South,39.93329672558318,-82.98960548428782,Entire home/apt,100,2,2,2018-05-06,0.43,1,130\n\
+21210728,"Updated Merion Village Home, with garage parking",102933804,Aaron,,Near South,39.93329672558318,-82.98960548428782,Entire home/apt,100,2,2,2018-05-06,0.43,1,130\n\
 21217870,Mo.0!,103990873,Monique & Brian,,Near South,39.95170134788908,-82.99517967579399,Entire home/apt,90,1,24,2018-07-24,2.40,4,154\n\
 21218112,Lisa,103990873,Monique & Brian,,Near South,39.951207559231136,-82.99597444608683,Entire home/apt,92,1,5,2018-08-01,5,4,147\n\
-21225103,Renovated 2 bed, Short North house with parking!!!,29506288,Eric,,Near North/University,39.9820181379688,-83.00733487545665,Entire home/apt,115,1,29,2018-07-22,2.82,7,89\n\
+21225103,"Renovated 2 bed, Short North house with parking!!!",29506288,Eric,,Near North/University,39.9820181379688,-83.00733487545665,Entire home/apt,115,1,29,2018-07-22,2.82,7,89\n\
 21229004,Private Home in Victorian Village- Walk to OSU!,119188865,Bridgid,,Near North/University,39.9884434155228,-83.01730232299408,Entire home/apt,75,2,22,2018-08-07,2.21,3,139\n\
 21241536,Easton's Near by Quiet Residence,64918482,William,,Northland,40.06957385657259,-82.92663988877067,Private room,40,1,96,2018-08-14,9.57,1,350\n\
-21245065,Steps to Short North, OSU, Convention Center, DWTN,29506288,Eric,,Near North/University,39.978071801587404,-83.00424824552006,Private room,40,1,10,2018-08-01,0.98,7,84\n\
+21245065,"Steps to Short North, OSU, Convention Center, DWTN",29506288,Eric,,Near North/University,39.978071801587404,-83.00424824552006,Private room,40,1,10,2018-08-01,0.98,7,84\n\
 21277350,Charming & spacious home in Merion Village 1/2,18154186,Heath,,Near South,39.93874778907134,-82.99571104970808,Private room,43,1,15,2018-08-06,1.54,2,89\n\
-21278984,One bedroom, in New Albany minutes from Columbus,35099599,Andrea And Bill,,Rocky Fork-Blacklick,40.09577344155627,-82.82990692975585,Private room,55,1,4,2018-07-29,1.36,1,128\n\
+21278984,"One bedroom, in New Albany minutes from Columbus",35099599,Andrea And Bill,,Rocky Fork-Blacklick,40.09577344155627,-82.82990692975585,Private room,55,1,4,2018-07-29,1.36,1,128\n\
 21292078,Private Room Near Columbus Amenities,154062628,Matt-Mike,,Rocky Fork-Blacklick,40.06290292723009,-82.8834296786303,Private room,39,1,12,2018-07-29,1.20,1,79\n\
 21319776,Spectacular Condo for Business or Getaways,27861358,Will,,Northwest,40.090442128066506,-83.0876900488156,Entire home/apt,45,2,54,2018-08-12,5.38,4,85\n\
 21320030,Outstanding 3BR Townhouse for Work or a Getaway,27861358,Will,,Far Northwest,40.11645806697805,-83.08856236581234,Entire home/apt,55,2,46,2018-08-12,4.83,4,56\n\
@@ -556,22 +518,22 @@
 21406034,Old North Guesthouse Near Everything!,29007420,Dave,,Near North/University,40.01455160626367,-83.00349344358384,Entire home/apt,40,1,73,2018-08-12,7.23,1,53\n\
 21419989,Heart of Olde Towne East,67255811,Tabitha,,Near East,39.96277502148483,-82.97531641491949,Private room,69,1,29,2018-08-12,4.33,1,10\n\
 21420397,Historic Luxury 2BR German Village Townhouse,9152651,Jon,,Near South,39.9506217333713,-82.99328747621213,Entire home/apt,90,1,34,2018-08-05,3.67,13,53\n\
-21421491,LOCATION!  Walk to OSU, Downtown, Short North!,95733891,George,,Near North/University,40.01479271735255,-83.01452466782827,Entire home/apt,95,1,61,2018-07-29,6.12,2,323\n\
+21421491,"LOCATION!  Walk to OSU, Downtown, Short North!",95733891,George,,Near North/University,40.01479271735255,-83.01452466782827,Entire home/apt,95,1,61,2018-07-29,6.12,2,323\n\
 21456641,Very Large 3BR Updated Victorian Village Townhouse,9152651,Jon,,Near North/University,39.98753617748154,-83.01317272859819,Entire home/apt,90,1,28,2018-08-12,2.94,13,66\n\
 21468125,Renovated condo minutes from shopping!,73010227,Miranda,,Far North,40.11913099427066,-82.98688866942508,Entire home/apt,85,2,31,2018-07-30,3.43,1,13\n\
 21473597,Pizza Paradise in Italian Village,30552897,Kevin,,Near North/University,39.98324385563914,-82.9994003911668,Entire home/apt,99,1,13,2018-07-25,3.00,1,15\n\
 21475354,Newly Renovated Space,17314325,Terry,,Near South,39.93001881251636,-82.99527671529444,Private room,85,1,7,2018-08-10,0.73,1,180\n\
-21526768,short north harrison haus \n\
-w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.01465073806536,Entire home/apt,110,1,62,2018-08-05,6.44,1,278\n\
-21536176,Sanders Estates  Private bed and bath, full access,119503958,Jonathan,,Northland,40.08151317414074,-82.97677352537278,Private room,75,1,0,,,1,364\n\
+21526768,"short north harrison haus \n\
+w/ parking",11930197,Scott,,Near North/University,39.98182386194305,-83.01465073806536,Entire home/apt,110,1,62,2018-08-05,6.44,1,278\n\
+21536176,"Sanders Estates  Private bed and bath, full access",119503958,Jonathan,,Northland,40.08151317414074,-82.97677352537278,Private room,75,1,0,,,1,364\n\
 21544449,peaceful pooch friendly dwelling near downtown ++,29229539,Megan,,Near South,39.943838770855955,-82.9865868765171,Entire home/apt,79,2,33,2018-08-10,3.56,1,75\n\
 21546836,Get comfortable and feel at home!!,110855394,Shaquel,,Eastmoor/Walnut Ridge,39.94228734373493,-82.84746099833899,Private room,60,1,1,2018-02-15,0.16,1,365\n\
 21590943,German Village & Shumacher Place- Cozy Bungalow,135253980,John,,Near South,39.94843498319553,-82.98602871857754,Entire home/apt,110,1,65,2018-08-13,7.80,1,116\n\
-21603745,Family friendly, clean, restful stay,114325185,Collin,,Far South,39.88508301780037,-82.98897068589794,Private room,40,7,0,,,1,88\n\
+21603745,"Family friendly, clean, restful stay",114325185,Collin,,Far South,39.88508301780037,-82.98897068589794,Private room,40,7,0,,,1,88\n\
 21623763,Wonder-ful (near Downtown Columbus),157313204,Erin,,Near South,39.944906109896756,-82.9774535253066,Entire home/apt,65,1,53,2018-08-01,6.02,2,3\n\
 21625739,Newly renovated duplex minutes from Downtown,76628675,Jake,,Franklinton,39.954903486870386,-83.03197411441897,Entire home/apt,60,2,9,2018-08-13,1.00,4,65\n\
-21641604,Feels like home near Easton, airport & downtown,157492767,Bobbi & Budi,,Rocky Fork-Blacklick,40.05852722248421,-82.88076269104654,Private room,55,1,57,2018-08-13,6.13,1,17\n\
-21648168,Quiet, Comfortable Room with Study Space,32864887,Tim,,Westland,39.9453907294437,-83.15687750751906,Private room,50,1,10,2018-05-20,1.13,2,268\n\
+21641604,"Feels like home near Easton, airport & downtown",157492767,Bobbi & Budi,,Rocky Fork-Blacklick,40.05852722248421,-82.88076269104654,Private room,55,1,57,2018-08-13,6.13,1,17\n\
+21648168,"Quiet, Comfortable Room with Study Space",32864887,Tim,,Westland,39.9453907294437,-83.15687750751906,Private room,50,1,10,2018-05-20,1.13,2,268\n\
 21649433,3 BR Home- Close to Everything (Duplex Left Side),2994567,Mark,,Near North/University,40.00955964238016,-82.99742734933334,Entire home/apt,135,2,4,2018-05-21,0.44,3,288\n\
 21658565,Small Clintonville House with Large Shady Yard,7785489,Nancy,,Near North/University,40.01740105366146,-83.00967091780853,Entire home/apt,85,3,9,2018-08-08,1.15,4,333\n\
 21679140,Empty Nester’s Haven,156536279,Monica,,Southeast,39.90474870239672,-82.80563271309256,Entire home/apt,53,2,1,2018-02-19,0.17,1,82\n\
@@ -580,7 +542,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 21711084,Wilson Ave Flat,24819507,Michael,,Near South,39.946021792502215,-82.96758216554011,Entire home/apt,70,2,41,2018-08-13,4.54,1,324\n\
 21712505,Micro Studio Chic,103700433,Erin,,Downtown,39.95829814993926,-82.99372820636519,Entire home/apt,89,1,43,2018-08-07,4.89,3,74\n\
 21722770,Cozy House,158178797,Sherri,,Far South,39.89558539628697,-82.97406445579419,Entire home/apt,125,2,20,2018-08-07,2.80,1,151\n\
-21746931,Quiet, Safe and Cozy couches Convenience & Price,104317092,Kateresa,,Eastland/Brice,39.926480875355466,-82.82104233070045,Shared room,45,1,3,2018-08-03,0.34,2,90\n\
+21746931,"Quiet, Safe and Cozy couches Convenience & Price",104317092,Kateresa,,Eastland/Brice,39.926480875355466,-82.82104233070045,Shared room,45,1,3,2018-08-03,0.34,2,90\n\
 21762802,Cozy Cottage 1st floor setup everything in reach,85898781,Jason,,Hilltop,39.943609313532825,-83.081397732453,Private room,35,1,10,2018-08-08,1.11,1,58\n\
 21763444,2BR apartment near downtown w/parking,154729324,Jaime,,Near North/University,39.97678122598878,-83.0158555834547,Entire home/apt,149,1,96,2018-07-08,10.55,1,262\n\
 21795196,Comfy n Cozy,35103475,Yaya,,Southeast,39.88191395900438,-82.83041560020132,Entire home/apt,65,1,23,2018-08-15,2.53,3,68\n\
@@ -595,29 +557,29 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 21964438,Private Room in 2-Bedroom Columbus Apartment,160351341,Morgan,,Northland,40.06428012045439,-82.99188185418599,Private room,29,1,55,2018-08-10,6.37,1,35\n\
 22016352,Weinland Park / Short North Duplex,160768602,Benjamin,,Near North/University,39.98960995357767,-82.99663289200757,Entire home/apt,115,1,96,2018-08-15,12.36,2,121\n\
 22049058,Carriage house with pool - Best location in Cbus!,27717428,Frank,,Near North/University,39.98108077998726,-83.00742417373316,Entire home/apt,225,2,13,2018-08-12,2.44,1,217\n\
-22060949,Cozy, Convenient Short North/Italian Village 2BR,14037717,Brandy,,Near North/University,39.9829100173831,-82.99824392774568,Entire home/apt,145,1,54,2018-08-07,7.11,1,152\n\
+22060949,"Cozy, Convenient Short North/Italian Village 2BR",14037717,Brandy,,Near North/University,39.9829100173831,-82.99824392774568,Entire home/apt,145,1,54,2018-08-07,7.11,1,152\n\
 22067508,Beautiful & Spacious Home Next to Downtown!,47778842,Atticus,,Near South,39.948551987691005,-82.97953877616786,Private room,50,1,26,2018-08-10,3.82,1,56\n\
 22084228,Sone's Place Room B,159975517,Rodrigue,,Northland,40.09528647211919,-82.94910448252497,Private room,35,2,14,2018-07-01,1.70,2,227\n\
 22085400,Sone's Place  Room A,159975517,Rodrigue,,Northland,40.09539009811156,-82.95079272592831,Private room,30,5,6,2018-07-07,1.08,2,227\n\
 22089072,The Graceland House - Short North & Ohio State,90103906,Zach And Shoshanna,,Near North/University,39.992719173249036,-82.99961640393595,Entire home/apt,300,1,48,2018-08-12,5.88,2,67\n\
-22105240,The Treat Yo Self Retreat - Best Sleep Ever!!!,26958698,Benjamin,,Near North/University,39.9815926292056,-83.00918039038969,Entire home/apt,115,1,86,2018-08-02,10.32,12,91\n\
+22105240,"The Treat Yo Self Retreat - ""Best Sleep Ever!!!""",26958698,Benjamin,,Near North/University,39.9815926292056,-83.00918039038969,Entire home/apt,115,1,86,2018-08-02,10.32,12,91\n\
 22105485,Home away from home!,160922350,Diego,,Northland,40.092440633055155,-82.93770077158655,Entire home/apt,98,2,24,2018-07-29,3.05,1,244\n\
 22116412,Columbus private floor,19380517,Kelley,,Near North/University,40.00335985033116,-82.99778729727137,Entire home/apt,56,1,34,2018-08-05,4.20,1,311\n\
 22120473,Spacious bedroom monthly booking welcomed,88006238,Bonnie,,Near East,39.97553083788671,-82.9493260041709,Private room,29,1,4,2018-06-12,0.71,4,62\n\
 22140048,Private suite in Family home 433 sq ft N. Columbus,69991007,Brue,,Clintonville,40.03820254941717,-83.01825976408836,Entire home/apt,49,1,13,2018-07-29,2.17,1,66\n\
 22152555,Be Our Guest! Renovated Short North area townhome,160931077,Joy,,Near North/University,39.99236276367915,-82.99927758721604,Entire home/apt,83,1,33,2018-08-12,4.76,1,193\n\
 22191797,Mission Style Old Town East Charmer near downtown!,162147055,Lilly & Kenny,,Near East,39.96210828977764,-82.97676588892543,Entire home/apt,120,1,16,2018-07-29,2.47,1,272\n\
-22264196,Custom Home Near Short North, OSU & Downtown,10828872,Logan,,Near North/University,39.98658832566006,-83.00000476582738,Entire home/apt,275,2,14,2018-08-05,1.74,1,195\n\
+22264196,"Custom Home Near Short North, OSU & Downtown",10828872,Logan,,Near North/University,39.98658832566006,-83.00000476582738,Entire home/apt,275,2,14,2018-08-05,1.74,1,195\n\
 22278992,Wonder Bread Loft Short North with Parking,47052293,Annette,,Near North/University,39.976946117816674,-82.9973613255002,Entire home/apt,100,1,42,2018-08-13,5.21,4,130\n\
 22290424,Cozy room in our central Olde Town East home!,34040116,Erika & Chris,,Near East,39.9639030327654,-82.96337920766672,Private room,40,1,61,2018-08-12,10.17,1,155\n\
-22398513,Downtown Columbus, 1 bedroom,163481444,Danielle,,Downtown,39.96333418632177,-82.98640552911326,Private room,35,2,2,2018-04-27,0.30,1,76\n\
+22398513,"Downtown Columbus, 1 bedroom",163481444,Danielle,,Downtown,39.96333418632177,-82.98640552911326,Private room,35,2,2,2018-04-27,0.30,1,76\n\
 22421892,Luxury Penthouse w/Garage - Arena Dist/Short North,116400313,Nate,,Downtown,39.96776834115759,-83.00396605557897,Entire home/apt,150,2,15,2018-08-09,2.71,9,49\n\
 22431018,Apartment for a perfect getaway near downtown Cbus,77534424,Jessica,,West Olentangy,39.99257160451399,-83.04646052562448,Entire home/apt,100,1,4,2018-01-28,0.54,1,0\n\
 22434913,Close2home,164327118,Terry,,Eastland/Brice,39.92880243623574,-82.92163040336317,Entire home/apt,70,2,26,2018-08-05,3.42,1,42\n\
 22448505,Renovated Church in the Short North,79868529,Tim,,Near North/University,39.9843372439313,-83.01429941398102,Private room,50,1,42,2018-08-14,6.49,1,124\n\
-22448800,Private inroom Bathrm, Perfect for travel/fam/busn,35103475,Yaya,,Southeast,39.878114341525304,-82.83116705726557,Private room,45,4,0,,,3,63\n\
+22448800,"Private inroom Bathrm, Perfect for travel/fam/busn",35103475,Yaya,,Southeast,39.878114341525304,-82.83116705726557,Private room,45,4,0,,,3,63\n\
 22460901,Victorian Village Apartment on Neil Ave!,97538083,Mikey,,Near North/University,39.9871571048973,-83.01210939592954,Entire home/apt,100,2,7,2018-04-22,1.45,1,222\n\
-22479892,Private Bedroom - Short North, OSU, Downtown,4781655,Pedro,,Near North/University,39.99260390625349,-83.0141790500832,Private room,39,1,26,2018-07-23,3.56,2,0\n\
+22479892,"Private Bedroom - Short North, OSU, Downtown",4781655,Pedro,,Near North/University,39.99260390625349,-83.0141790500832,Private room,39,1,26,2018-07-23,3.56,2,0\n\
 22481727,The Legacy House - Your Home Away From Home,101833432,James,,South Linden,39.98040061887937,-82.99291900271908,Entire home/apt,119,2,29,2018-08-12,5.24,1,325\n\
 22482487,The Franklinton Inn,26958698,Benjamin,,Franklinton,39.9577064585669,-83.02693089486475,Entire home/apt,129,1,35,2018-08-08,4.71,12,46\n\
 22507363,Guest Room #1 at Willis Park,87842332,Christopher,,Eastmoor/Walnut Ridge,39.944467403883294,-82.8648035192607,Private room,44,1,20,2018-08-06,3.21,2,87\n\
@@ -630,7 +592,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 22644806,Priv. 2nd Floor Ensuite Queen - N. Campus,2350409,Eddie,,Near North/University,40.01036073819594,-83.0081904365353,Private room,35,4,1,2018-05-21,0.34,4,107\n\
 22646137,Beautiful renovated ranch in quiet neighborhood.,33532441,Alex,,Eastmoor/Walnut Ridge,39.93918725893078,-82.9121059756689,Entire home/apt,139,2,23,2018-08-12,3.27,2,309\n\
 22653019,Merda's Townhome,31758319,Meredith,,Rocky Fork-Blacklick,40.10194828056038,-82.82775327547476,Private room,60,2,0,,,1,88\n\
-22655120,✦ Comfy & Gated 1-bed, 1-bath: Pool, Gym & Trails!,166861677,Mel,,Eastland/Brice,39.92631182153617,-82.93052891186808,Entire home/apt,80,2,24,2018-07-27,3.65,1,37\n\
+22655120,"✦ Comfy & Gated 1-bed, 1-bath: Pool, Gym & Trails!",166861677,Mel,,Eastland/Brice,39.92631182153617,-82.93052891186808,Entire home/apt,80,2,24,2018-07-27,3.65,1,37\n\
 22691105,Beautiful Historic Home near Children's Hospital,167276977,Tanya,,Near South,39.95027903647801,-82.97391548971812,Entire home/apt,200,1,17,2018-07-23,2.63,1,91\n\
 22701184,Blue Beechwald Bungalow! Clintonville/Worthington.,26958698,Benjamin,,Clintonville,40.07387100687599,-83.00860598828339,Entire home/apt,165,1,35,2018-07-29,4.95,12,244\n\
 22703654,Gorgeous Executive Home,72582807,Ben,,Far North,40.12123536015746,-82.97887883892463,Entire home/apt,178,1,14,2018-07-30,2.33,1,347\n\
@@ -642,7 +604,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 22829374,Vintage Charmer at the Heart of It All!,8963103,Sarah And Nick,,West Olentangy,39.98744285853669,-83.03615766493519,Entire home/apt,85,1,57,2018-08-12,8.68,2,142\n\
 22848639,4 Bedroom Home Downtown Columbus Victorian Village,28695156,Miles,,Near North/University,39.98465264674499,-83.01546306081885,Entire home/apt,300,1,19,2018-07-29,3.35,4,331\n\
 22866713,Victorian Village Charmer - Fully Renovated Home,3142282,Adrienne,,Near North/University,39.982441920686014,-83.02048033977815,Entire home/apt,85,2,21,2018-08-06,4.81,1,1\n\
-22903957,Clintonville Townhome Columbus, Ohio,46946374,Norma,,Clintonville,40.03284541451429,-83.01816827391107,Entire home/apt,130,2,3,2018-06-03,0.65,1,30\n\
+22903957,"Clintonville Townhome Columbus, Ohio",46946374,Norma,,Clintonville,40.03284541451429,-83.01816827391107,Entire home/apt,130,2,3,2018-06-03,0.65,1,30\n\
 22920809,Private Carriage House - Prime Location & Parking,31798233,Sam,,Near North/University,39.985499204110134,-83.00128830000328,Entire home/apt,150,1,35,2018-08-08,6.91,4,159\n\
 22922640,Walk to OSU and the Short North!,52670347,Pat,,Near North/University,39.99036979315359,-83.0073024534305,Entire home/apt,119,2,30,2018-08-12,4.92,3,129\n\
 22923400,NEW- The Dublin Retreat! North C-bus Housepitality,115836608,Erich,,Northwest,40.08427690363735,-83.09811953625871,Entire home/apt,130,1,37,2018-08-11,5.75,1,82\n\
@@ -650,7 +612,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 22959248,CENTRALLY LOCATED! Spacious Columbus Family Home,170105791,Betty,,Northeast,40.0092626800115,-82.92093568521813,Entire home/apt,135,2,7,2018-07-08,1.23,1,274\n\
 22998312,Ballroom Penthouse In The Center Of Columbus,70413293,STR Capital,,Near South,39.94092072967775,-82.99752222778487,Entire home/apt,75,1,33,2018-08-13,5.03,8,57\n\
 23004939,Top Rated Clintonville Home w/ 24Hr Gym,14725198,Rachael,,Clintonville,40.03142196795757,-83.0103999540277,Entire home/apt,100,1,47,2018-08-07,7.46,1,297\n\
-23005234,Italian Village, Private Home-Walk to Short North!,119188865,Bridgid,,Near North/University,39.98237818334215,-82.99922002725137,Entire home/apt,350,3,7,2018-07-30,1.27,3,139\n\
+23005234,"Italian Village, Private Home-Walk to Short North!",119188865,Bridgid,,Near North/University,39.98237818334215,-82.99922002725137,Entire home/apt,350,3,7,2018-07-30,1.27,3,139\n\
 23018100,Absolutely Ideal Condo for Work or Time Away,27861358,Will,,Northwest,40.09159390449539,-83.08649839476047,Entire home/apt,59,2,32,2018-08-11,5.39,4,71\n\
 23041995,Luxury Home Great Location,70413293,STR Capital,,Near North/University,39.986662289663144,-83.00234662621337,Entire home/apt,70,1,25,2018-07-04,3.81,8,350\n\
 23072632,Clintonville Charmer,66467665,Ashley,,Clintonville,40.037874877124764,-83.00318770838409,Entire home/apt,100,90,5,2018-06-25,1.21,1,353\n\
@@ -665,11 +627,11 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 23171208,Modern space private entrance mins to city/airport,23176550,Caleb,,Northeast,39.985339153681736,-82.93619113929711,Entire home/apt,75,1,86,2018-08-12,16.86,1,133\n\
 23209971,Lavish Home near Easton. 2BR&2bath.,172611262,Kobby,,Northeast,40.04532059489862,-82.90734810578176,Entire home/apt,101,3,9,2018-07-28,1.97,1,177\n\
 23230861,Eclectic Cape Cod-Min from Airport,172838925,Brooke,,Eastmoor/Walnut Ridge,39.95757268988293,-82.91730727389916,Entire home/apt,85,2,7,2018-07-22,1.27,1,82\n\
-23238240,The Franklinton Mansion. 4 BR, 2 BA, sleeps 16!,26958698,Benjamin,,Franklinton,39.95591660421027,-83.02615614626023,Entire home/apt,299,1,16,2018-08-05,3.18,12,149\n\
+23238240,"The Franklinton Mansion. 4 BR, 2 BA, sleeps 16!",26958698,Benjamin,,Franklinton,39.95591660421027,-83.02615614626023,Entire home/apt,299,1,16,2018-08-05,3.18,12,149\n\
 23256796,Historic 1920’s Craftsman Home. Perfect location!,3638046,Amy,,Clintonville,40.039906371674114,-83.01911773812621,Entire home/apt,175,2,8,2018-08-04,1.75,1,239\n\
 23276785,Urban Retreat,138329748,Julia,,Near North/University,40.018220887582785,-83.00890637591857,Entire home/apt,95,1,45,2018-08-08,8.04,2,225\n\
 23290856,Relive college with us! [Dorm],173394855,Michael,,Near North/University,39.99327976571501,-83.01324833437016,Shared room,50,1,2,2018-03-02,0.35,1,76\n\
-23319324,Near OSU, Downtown, Short North, and more!,95733891,George,,Near North/University,40.01411535760145,-83.013644990144,Entire home/apt,103,1,37,2018-08-02,6.45,2,336\n\
+23319324,"Near OSU, Downtown, Short North, and more!",95733891,George,,Near North/University,40.01411535760145,-83.013644990144,Entire home/apt,103,1,37,2018-08-02,6.45,2,336\n\
 23325292,Short North One Bed w/Off-street Parking,71666929,August,,Near North/University,39.9833699083304,-83.0060940821475,Entire home/apt,85,1,71,2018-08-02,12.10,3,321\n\
 23355971,Olde Town East Charmer near Downtown!,17197649,Elaine,,Near East,39.96165818499151,-82.96087063525951,Private room,60,1,12,2018-08-02,2.17,1,250\n\
 23356786,Cozy Clintonville Cottage,96583592,Tricia,,Clintonville,40.073972637649,-83.01504989673924,Entire home/apt,89,1,25,2018-08-12,4.52,1,150\n\
@@ -678,10 +640,10 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 23399699,Private bed & bath in Hilliard,90709011,Pavla,,Far West,39.99530464887727,-83.16040817170145,Private room,40,2,4,2018-06-02,0.72,1,15\n\
 23408318,Finished basement,63923547,Joel,,Northland,40.088090176354136,-82.94354737638356,Private room,40,2,5,2018-07-29,1.70,1,74\n\
 23430634,Newly Updated Victorian Village 3BR Townhouse,9152651,Jon,,Near North/University,39.9821260397352,-83.01057800268958,Entire home/apt,110,1,17,2018-08-10,3.36,13,258\n\
-23459548,Central Columbus, near Downtown,174361375,Zoey,,Northland,40.08938955829828,-82.97197137623711,Private room,50,1,0,,,1,80\n\
-23462639,Full service B&B -free parking, breakfast, & more!,175078890,50 Lincoln,,Near North/University,39.97607919748162,-83.00282749081657,Private room,152,1,3,2018-07-04,0.79,1,343\n\
+23459548,"Central Columbus, near Downtown",174361375,Zoey,,Northland,40.08938955829828,-82.97197137623711,Private room,50,1,0,,,1,80\n\
+23462639,"Full service B&B -free parking, breakfast, & more!",175078890,50 Lincoln,,Near North/University,39.97607919748162,-83.00282749081657,Private room,152,1,3,2018-07-04,0.79,1,343\n\
 23465975,Italian Village Spa Oasis with Jacuzzi Tub,13312217,Lauren,,Near North/University,39.982807818433486,-82.99801710743327,Entire home/apt,125,2,12,2018-07-29,2.17,1,4\n\
-23467524,FULLY FURNISHED HOME IN COLUMBUS, Mount Carmel E.,120741275,Jill,,Far East,39.972469818873776,-82.83470825423062,Entire home/apt,140,7,2,2018-06-02,0.51,1,164\n\
+23467524,"FULLY FURNISHED HOME IN COLUMBUS, Mount Carmel E.",120741275,Jill,,Far East,39.972469818873776,-82.83470825423062,Entire home/apt,140,7,2,2018-06-02,0.51,1,164\n\
 23469529,White Brick Studio - OSU & Short North,52174539,Nat,,Near North/University,39.991837123255586,-83.01032481803747,Entire home/apt,65,1,72,2018-08-11,14.21,3,95\n\
 23487195,Cozy Family Friendly Two Bedroom Condo,175362086,Misty,,Westland,39.916863777553246,-83.12385716518673,Entire home/apt,89,2,20,2018-08-10,3.64,1,103\n\
 23521285,SOHUD Treetop Townhouse,4723137,David,,Near North/University,40.014188097960464,-83.00142357808664,Entire home/apt,85,3,48,2018-08-06,8.78,1,103\n\
@@ -694,12 +656,12 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 23591091,Your Home Away From Home,176373381,Allan,,Rocky Fork-Blacklick,40.08953501488581,-82.8758442761548,Entire home/apt,150,1,12,2018-08-12,2.61,1,65\n\
 23622751,Newly renovated apartment that welcomes all!,139431289,Kali,,West Olentangy,39.971244198357354,-83.04927013925926,Private room,55,2,21,2018-07-28,4.01,1,163\n\
 23627303,2 Bedroom Olde Towne East Victorian Home Downtown,20368544,Al,,Near East,39.96024382315956,-82.97161960393991,Entire home/apt,135,2,5,2018-08-13,1.03,2,177\n\
-23631933,Short North Private Home, off Summit and 4th Ave.,125943733,Joe,,Near North/University,39.987445222545716,-83.00206958092024,Entire home/apt,85,1,75,2018-08-06,13.98,3,307\n\
+23631933,"Short North Private Home, off Summit and 4th Ave.",125943733,Joe,,Near North/University,39.987445222545716,-83.00206958092024,Entire home/apt,85,1,75,2018-08-06,13.98,3,307\n\
 23643229,Completely renovated condo close to Graceland.,114877752,Estelle,,Clintonville,40.063978589686194,-83.0192292229145,Entire home/apt,60,1,14,2018-08-01,2.71,1,140\n\
 23671175,BEAUTIFUL NEW GRANT PARK 3 BEDROOM,177259568,Adam,,Near North/University,39.98841521845911,-82.99829963785488,Entire home/apt,110,1,24,2018-08-06,5.18,1,0\n\
-23677283,Charming Condo - Close to German Village, Free Bus,48323245,Maggie,,Near South,39.950638751139394,-82.99895025600182,Entire home/apt,89,2,7,2018-07-22,1.53,1,20\n\
+23677283,"Charming Condo - Close to German Village, Free Bus",48323245,Maggie,,Near South,39.950638751139394,-82.99895025600182,Entire home/apt,89,2,7,2018-07-22,1.53,1,20\n\
 23685836,Wonder-ful too (near Downtown Columbus),157313204,Erin,,Near South,39.94505108010413,-82.97698500422081,Entire home/apt,45,1,29,2018-08-01,5.44,2,16\n\
-23714822,Olde Towne Charmer - 4 Bedrooms, 3 Full Baths!,31798233,Sam,,Near East,39.96432102559219,-82.97926096588593,Entire home/apt,300,2,9,2018-08-10,2.06,4,248\n\
+23714822,"Olde Towne Charmer - 4 Bedrooms, 3 Full Baths!",31798233,Sam,,Near East,39.96432102559219,-82.97926096588593,Entire home/apt,300,2,9,2018-08-10,2.06,4,248\n\
 23723456,Large German Village Home with Beautiful Patio,71567500,Pat,,Near South,39.94165634301941,-82.99904711011382,Entire home/apt,218,1,25,2018-08-10,5.00,2,159\n\
 23728894,Secured Room. May have home to yourself.,47433167,Bianca & Gerald,,Near South,39.95130667635241,-82.97338077772574,Private room,30,2,1,2018-08-15,1,6,56\n\
 23729423,Hip Storefront Condo in German Village,63781904,Morgan,,Near South,39.94003086680206,-82.99097444818281,Entire home/apt,200,2,10,2018-08-12,3.66,1,12\n\
@@ -709,19 +671,19 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 23767452,Hilltop Hideout,116125619,Jupiter,,Hilltop,39.950191206095795,-83.051241053204,Private room,75,1,1,2018-03-21,0.20,1,89\n\
 23809589,The Ohio State Friends & Family House,8182951,Jared,,Near North/University,40.01193908528345,-83.00332083898275,Entire home/apt,93,1,38,2018-08-10,7.70,2,52\n\
 23822283,Artistic Olde Towne East Efficiency Apartment,45680657,Kendric,,Near East,39.96008492329522,-82.97666610143173,Entire home/apt,85,1,50,2018-08-14,10.87,1,59\n\
-23839755,JAM House, Single Bedroom 1 Mile From Downtown,129437532,Jeremy,,Franklinton,39.953283250246315,-83.02964770086889,Private room,45,1,19,2018-06-30,4.10,1,107\n\
-23921721,A Diamond in the Rough! Get MORE, Spend Less. QB1,47433167,Bianca & Gerald,,Near South,39.95100188736605,-82.973936130764,Private room,45,1,1,2018-03-30,0.21,6,151\n\
+23839755,"JAM House, Single Bedroom 1 Mile From Downtown",129437532,Jeremy,,Franklinton,39.953283250246315,-83.02964770086889,Private room,45,1,19,2018-06-30,4.10,1,107\n\
+23921721,"A Diamond in the Rough! Get MORE, Spend Less. QB1",47433167,Bianca & Gerald,,Near South,39.95100188736605,-82.973936130764,Private room,45,1,1,2018-03-30,0.21,6,151\n\
 23922860,A Diamond in Rough. Spend Less. Save More. QB2,47433167,Bianca & Gerald,,Near South,39.94935895771407,-82.97216543426714,Private room,50,1,4,2018-05-29,0.86,6,151\n\
 23930458,3bd/3ba.  Private key coded rooms.,47433167,Bianca & Gerald,,Near South,39.94970516396576,-82.97249557361418,Private room,110,3,1,2018-04-17,0.25,6,61\n\
 23948008,Your Home Away From Home Near the Airport,180065774,Lewis,,Northeast,39.985016389109425,-82.91608526591145,Entire home/apt,111,1,48,2018-08-06,9.93,2,224\n\
 23979681,Private Room on Westerville Golf Course,98231352,Jen,,Rocky Fork-Blacklick,40.08435822885932,-82.87143163675513,Private room,39,1,3,2018-05-20,0.96,1,0\n\
-23997639,Spend LESS, Save MORE.  Diamond in the Rough.,47433167,Bianca & Gerald,,Near South,39.94970914403146,-82.97372892361362,Private room,35,1,1,2018-04-27,0.27,6,61\n\
+23997639,"Spend LESS, Save MORE.  Diamond in the Rough.",47433167,Bianca & Gerald,,Near South,39.94970914403146,-82.97372892361362,Private room,35,1,1,2018-04-27,0.27,6,61\n\
 24015866,Cozy home in Victorian Village just off High St,46413733,Kacey,,Near North/University,39.98525008183396,-83.00880885654112,Entire home/apt,76,1,2,2018-07-01,0.98,1,15\n\
 24036884,Valleyview Suite,180917362,Rebecca,,Hilltop,39.95823520575645,-83.08642392072846,Private room,68,1,9,2018-07-26,2.05,1,43\n\
 24057734,Comfortable Bedroom near Nationwide Children's,91730355,Kelli,,Near South,39.947625449499036,-82.97424934948491,Private room,40,1,17,2018-08-05,4.86,3,249\n\
 24065603,Penn Place,157836973,Dan,,Near North/University,39.9840904196331,-83.01492715554289,Entire home/apt,225,1,4,2018-07-22,0.91,4,364\n\
 24142956,Cozy Musician Studio in Short North,9999117,Michael,,Near North/University,39.984898342439244,-83.01095784854947,Entire home/apt,51,1,56,2018-08-12,12.82,1,131\n\
-24151541,Cafe Wakefern, LLC: We LOVE your dogs!!!,181978569,Bridgett,,North Linden,40.031807190716215,-82.94384518570601,Private room,55,1,9,2018-06-25,2.31,1,131\n\
+24151541,"Cafe Wakefern, LLC: We LOVE your dogs!!!",181978569,Bridgett,,North Linden,40.031807190716215,-82.94384518570601,Private room,55,1,9,2018-06-25,2.31,1,131\n\
 24155020,Newly Renovated Grand-view Heights Apartment,46502002,Rob,,West Scioto,39.98813700495115,-83.0780729868543,Entire home/apt,71,1,1,2018-05-28,0.37,1,13\n\
 24156011,Short North Nest,30241348,David,,Near North/University,39.9749881865163,-83.00399440409949,Entire home/apt,120,2,15,2018-08-12,5.06,1,151\n\
 24160659,Clintonville Contemporary 3 Bedroom Home,74477532,Marge,,Clintonville,40.03406915752562,-83.01393091801731,Entire home/apt,125,2,10,2018-08-08,2.94,1,223\n\
@@ -740,7 +702,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 24339760,Comfortable campus area home,183657500,Connor,,Near North/University,40.016247856077534,-83.00571616208678,Private room,30,1,17,2018-08-15,8.36,1,103\n\
 24359312,The Blue Ribbon Hideaway Home,8182951,Jared,,Near North/University,40.01277165893585,-82.99853160762571,Entire home/apt,105,1,17,2018-07-25,4.32,2,71\n\
 24366599,Seth's Home,42426080,Seth,,Near North/University,40.01459013725086,-83.00697424127543,Private room,87,1,13,2018-07-15,3.39,1,10\n\
-24412333,The Pine House - 3br Home, Central to City and OSU,41049468,Lauren,,Clintonville,40.0209480669603,-83.00610259479967,Entire home/apt,99,1,17,2018-07-30,4.59,1,128\n\
+24412333,"The Pine House - 3br Home, Central to City and OSU",41049468,Lauren,,Clintonville,40.0209480669603,-83.00610259479967,Entire home/apt,99,1,17,2018-07-30,4.59,1,128\n\
 24449539,2 bedroom place in Short North,17821129,Geoff,,Near North/University,39.98667863739134,-83.00830564812158,Entire home/apt,109,2,7,2018-07-29,2.36,2,93\n\
 24453814,Beautiful 3 bedroom 3 story town home.,83153921,Hira,,Far West,40.00992579399848,-83.14038489303606,Entire home/apt,88,2,14,2018-08-12,4.08,1,34\n\
 24466885,Merion Village cottage,81973035,Wes,,Near South,39.93524655049081,-82.99400775162735,Private room,75,1,2,2018-05-01,0.55,1,86\n\
@@ -751,7 +713,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 24599205,Columbus budget backpacker house,54100341,Finley,,Near North/University,40.01251705232468,-83.00145732846602,Private room,20,2,2,2018-05-21,0.55,4,334\n\
 24642110,The Skyline Condo | Arena & Convention Center,10620281,Robert,,Downtown,39.96347227359758,-82.99721476433595,Entire home/apt,125,2,10,2018-08-03,2.86,3,164\n\
 24648483,Serene Retreat steps away from Park,143070772,Helen,,Clintonville,40.04068631405971,-83.01372465123981,Entire home/apt,10,2,10,2018-08-12,3.37,1,145\n\
-24678009,King Lincoln District home, minutes to Downtown,165232727,McDaniel Management,,Near East,39.96750305432068,-82.96650314155805,Entire home/apt,175,1,11,2018-08-12,5.41,1,142\n\
+24678009,"King Lincoln District home, minutes to Downtown",165232727,McDaniel Management,,Near East,39.96750305432068,-82.96650314155805,Entire home/apt,175,1,11,2018-08-12,5.41,1,142\n\
 24694336,Cosiest Wonderland at Short North w/ FREE PARKING,24532061,Bree,,Near North/University,39.976349908003115,-83.00376832155625,Entire home/apt,79,1,30,2018-07-27,9.28,1,0\n\
 24695635,Short North High Street Hideaway w/Parking,71567500,Pat,,Near North/University,39.98095048491025,-83.00324526010766,Entire home/apt,106,1,22,2018-08-15,6.29,2,80\n\
 24750382,Tommy’s Place in German Village. Close to Downtown,74208396,Tommy,,Near South,39.939793668391964,-82.9894191321099,Entire home/apt,139,1,54,2018-08-13,16.04,1,58\n\
@@ -768,12 +730,12 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 24958921,Magnate Suites 2-bedroom 2-bath,188045689,Oluwaseyi,,Northeast,40.027736604799536,-82.91838323430298,Entire home/apt,98,1,5,2018-06-07,1.81,2,87\n\
 24969919,German Village Getaway!,89696876,Eric,,Near South,39.952168258747385,-82.98781187304597,Entire home/apt,125,1,40,2018-08-14,12.77,2,321\n\
 25010114,Private room in Columbus,165521765,Raj,,Hayden Run,40.068759073136924,-83.13037819293666,Private room,26,4,13,2018-08-10,4.43,1,11\n\
-25016827,Safe, quite and convenient to stay in Columbus,189102967,Yohans,,Northeast,40.02883655936114,-82.90932357643615,Private room,50,5,0,,,1,179\n\
+25016827,"Safe, quite and convenient to stay in Columbus",189102967,Yohans,,Northeast,40.02883655936114,-82.90932357643615,Private room,50,5,0,,,1,179\n\
 25033320,Blue Silk Guesthouse- GREAT location with parking,59142285,Marjie,,North Linden,40.044645733605925,-82.9925484242109,Entire home/apt,175,2,13,2018-08-06,5.74,1,229\n\
 25055220,Weinland Park Bungalow,56913283,Danielle,,Near North/University,39.99152941546308,-82.99747904249458,Entire home/apt,120,1,20,2018-08-05,6.90,1,195\n\
 25055921,Fully Furnished 1BR Sublease Sept-May,60774271,Kenzie,,West Olentangy,40.020613475102344,-83.03002695429376,Entire home/apt,49,144,0,,,1,365\n\
 25121209,3rd Floor Sleeping Quarters & Entertainment Area.,29129391,Jason,,Near East,39.97266131715466,-82.95854728658236,Shared room,25,1,0,,,3,46\n\
-25139905,Clintonville Family Home, Entire House,127164334,Abbie,,Clintonville,40.03261173390595,-83.01229537111381,Entire home/apt,125,5,3,2018-07-31,1.76,1,0\n\
+25139905,"Clintonville Family Home, Entire House",127164334,Abbie,,Clintonville,40.03261173390595,-83.01229537111381,Entire home/apt,125,5,3,2018-07-31,1.76,1,0\n\
 25140897,THE AZALEA - 19mins from Airport & Downtown,190015960,Ron,,Far East,40.00260552349132,-82.77222274418793,Private room,49,1,3,2018-08-11,3,1,82\n\
 25158193,Living room 11 minutes to OSU,60529954,Malek,,West Olentangy,40.02529151111554,-83.03312707554346,Private room,20,1,6,2018-06-25,2.22,1,0\n\
 25183713,Private Bedroom/Bathroom Near Downtown Columbus,23343306,Alexander,,Hilltop,39.91618526481883,-83.10529760666714,Private room,45,1,9,2018-07-27,3.25,1,27\n\
@@ -792,7 +754,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 25420636,Modern Condo w/Garage - Arena District / Downtown,116400313,Nate,,Downtown,39.967690649057154,-83.0011788382282,Entire home/apt,119,29,0,,,9,196\n\
 25422868,“3 Private Queen Bedrooms” Columbus Home,191916098,Jami,,Near South,39.94912358334957,-82.95963387899738,Entire home/apt,150,1,8,2018-08-06,3.53,1,171\n\
 25455384,Roommate OH,181840707,Cristina,,Far East,39.99100458841365,-82.78614432849874,Private room,30,1,1,2018-06-03,0.40,1,288\n\
-25490020,The Garden Artsy Studio,40070890,Iyana,,Near North/University,39.98568475758294,-83.00677149269735,Shared room,99,2,0,,,1,365\n\
+25490020,"The Garden ""Artsy Studio""",40070890,Iyana,,Near North/University,39.98568475758294,-83.00677149269735,Shared room,99,2,0,,,1,365\n\
 25513131,Short North 2BR - Home Suite Home,10584778,Andy,,Near North/University,39.98114018883302,-83.01758417153968,Entire home/apt,98,1,7,2018-08-07,4.29,2,177\n\
 25551459,SoBe Easton Apartments 1 Bedroom for 4!,157636265,SoBeNY,,Northeast,40.02781523755355,-82.9195052903617,Entire home/apt,265,2,0,,,53,362\n\
 25551472,SoBe Easton Apartments Spacious 2BR/ 2BA!,157636265,SoBeNY,,Northeast,40.02840263645168,-82.91929760413339,Entire home/apt,312,2,1,2018-07-22,1,53,361\n\
@@ -808,18 +770,18 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 25678090,Classy Room between Downtown and Airport,159799820,Happy,,Southeast,39.88042037250729,-82.83003027373236,Private room,56,1,3,2018-07-15,1.48,2,3\n\
 25690294,Bright Italian Village/Short North Urban Oasis!,193350430,Lindsey,,Near North/University,39.983385864703926,-82.99807264494792,Entire home/apt,110,2,12,2018-08-03,5.22,1,167\n\
 25771375,Historic Oak Street Apartment,140728885,Rick,,Downtown,39.96160665518021,-82.98343660302659,Entire home/apt,75,2,14,2018-08-14,6.00,1,214\n\
-25801573,Lots of light! Walk to OSU, Short North.,52670347,Pat,,Near North/University,39.98909739408746,-83.00860944921284,Entire home/apt,119,2,8,2018-08-02,3.81,3,147\n\
+25801573,"Lots of light! Walk to OSU, Short North.",52670347,Pat,,Near North/University,39.98909739408746,-83.00860944921284,Entire home/apt,119,2,8,2018-08-02,3.81,3,147\n\
 25806441,Dynamic Downtown Columbus Loft - Housepitality,26958698,Benjamin,,Downtown,39.96230641400992,-82.98420929680579,Entire home/apt,149,1,8,2018-07-17,3.53,12,31\n\
 25808224,Gorgeous Large 3BR German Village Home With Patio,58040421,Tom,,Near South,39.94773735075696,-82.9910624569194,Entire home/apt,175,1,8,2018-08-06,4.29,12,264\n\
 25837448,A Buckeye get away!,193955148,Brian,,Far East,40.00310684510553,-82.77267448938817,Entire home/apt,79,2,4,2018-08-12,2.79,1,62\n\
-25843956,MODERN, COMFY and FULLY RENOVATED BRICK OASIS,177205580,Adrian,,Near South,39.945413461013246,-82.97502282010723,Entire home/apt,120,1,5,2018-08-11,3.75,1,158\n\
+25843956,"MODERN, COMFY and FULLY RENOVATED BRICK OASIS",177205580,Adrian,,Near South,39.945413461013246,-82.97502282010723,Entire home/apt,120,1,5,2018-08-11,3.75,1,158\n\
 25858734,The Village Carriage House - Free Parking!!!,194281106,Nicole,,Near North/University,39.98161355639543,-83.00884076192145,Entire home/apt,125,1,3,2018-08-12,1.36,1,359\n\
-25888781,Premier Short North Apartment on High St,  1 BDR,23877472,Robert,,Near North/University,39.977164327172474,-83.00310888446253,Entire home/apt,125,2,6,2018-08-05,2.95,1,211\n\
-25916782,2 Bedroom Apt -Pool, Gym, Close to OSU!,182018507,SoBe,,Northwest,40.0588479313112,-83.04566110841141,Entire home/apt,177,1,1,2018-07-11,0.81,51,357\n\
+25888781,"Premier Short North Apartment on High St,  1 BDR",23877472,Robert,,Near North/University,39.977164327172474,-83.00310888446253,Entire home/apt,125,2,6,2018-08-05,2.95,1,211\n\
+25916782,"2 Bedroom Apt -Pool, Gym, Close to OSU!",182018507,SoBe,,Northwest,40.0588479313112,-83.04566110841141,Entire home/apt,177,1,1,2018-07-11,0.81,51,357\n\
 25916796,Beautifully designed 1 Bedroom in NW Columbus!,182018507,SoBe,,Northwest,40.05644199600666,-83.04775114842369,Entire home/apt,166,1,0,,,51,361\n\
 25916816,1 Bedroom Home near OSU with Free Parking!,182018507,SoBe,,Northwest,40.05643554339691,-83.04681062204577,Entire home/apt,166,1,0,,,51,339\n\
 25916850,Comfortable Studio 5 Mins to OSU-Sleeps 4!,182018507,SoBe,,Northwest,40.05628731284789,-83.04645816981801,Entire home/apt,162,1,0,,,51,359\n\
-25916874,Nice, Cozy 1 Bedroom Apartment, Great Location!,182018507,SoBe,,Northeast,40.02708125336517,-82.91734338557251,Entire home/apt,181,1,1,2018-07-10,0.79,51,342\n\
+25916874,"Nice, Cozy 1 Bedroom Apartment, Great Location!",182018507,SoBe,,Northeast,40.02708125336517,-82.91734338557251,Entire home/apt,181,1,1,2018-07-10,0.79,51,342\n\
 25916890,Comfortable 2 BR Apt 10 Mins to the Airport!,182018507,SoBe,,Northeast,40.02674784903925,-82.91635765058913,Entire home/apt,193,1,0,,,51,357\n\
 25916915,Large 1 BR Apt 15 Mins to OSU! Free parking!,182018507,SoBe,,Northeast,40.02665681025928,-82.91631712613697,Entire home/apt,181,1,0,,,51,345\n\
 25916947,1 Bedroom Apartment near Easton Mall! Sleeps 4,182018507,SoBe,,Northeast,40.02698086320229,-82.91888037062185,Entire home/apt,181,1,1,2018-06-21,0.53,51,361\n\
@@ -833,14 +795,14 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26057725,Gray and White Trellis Haven,46643109,Meg,,Northwest,40.06478513391587,-83.07753633398815,Private room,48,2,1,2018-07-09,0.77,1,89\n\
 26065804,heart of it all,195897386,M & D,,Downtown,39.96596656908004,-82.98978086724323,Entire home/apt,95,1,5,2018-08-05,3.75,1,8\n\
 26094202,Large Groups Come Here!!!!,80058118,Vickie,,Northeast,40.02760827142003,-82.91626830223043,Entire home/apt,110,1,1,2018-07-22,1,5,85\n\
-26129203,Perfect, Quiet, Roomy Townhouse- Work or a Getaway,27861358,Will,,Far Northwest,40.116829650519556,-83.0881850060313,Entire home/apt,55,2,8,2018-08-12,6.00,4,47\n\
+26129203,"Perfect, Quiet, Roomy Townhouse- Work or a Getaway",27861358,Will,,Far Northwest,40.116829650519556,-83.0881850060313,Entire home/apt,55,2,8,2018-08-12,6.00,4,47\n\
 26164361,Massive 4BR/2BA Updated Townhome 5 Min To Downtown,58040421,Tom,,Near East,39.96002860568278,-82.95881297608764,Entire home/apt,107,1,2,2018-08-06,1.54,12,267\n\
 26182703,Private chill room in a cosi 2 bedroom apartment,120274099,Mo,,Near North/University,40.005974845947115,-83.00793449520143,Private room,44,1,1,2018-08-10,1,2,52\n\
 26183352,Extend A Suites,196797856,Extend,,North Linden,40.060075642929625,-82.99752485789557,Private room,79,1,1,2018-07-07,0.73,1,87\n\
 26188389,Chic Urban Loft w/Parking - Downtown/Arena Dist,116400313,Nate,,Downtown,39.964411740050394,-82.99814057505044,Entire home/apt,125,29,0,,,9,99\n\
 26267968,Buckeye Retreat OSU Area House sleeps 10,71859419,Dean,,West Olentangy,40.03074393161115,-83.0441599420854,Entire home/apt,250,2,0,,,2,140\n\
 26282146,The Olde Towne Duplex #2,51959867,Stephen,,Near East,39.96468793829957,-82.97142300959236,Entire home/apt,175,3,0,,,2,119\n\
-26303632,Beautiful, Cozy Room near Nationwide Children's,91730355,Kelli,,Near South,39.94920982899201,-82.97283735230809,Private room,30,1,6,2018-08-03,4.50,3,227\n\
+26303632,"Beautiful, Cozy Room near Nationwide Children's",91730355,Kelli,,Near South,39.94920982899201,-82.97283735230809,Private room,30,1,6,2018-08-03,4.50,3,227\n\
 26303879,Private Room in Short North/ South Campus Area,78944868,Ellen,,Near North/University,39.98976414468542,-83.00546673840918,Private room,43,1,8,2018-08-07,8,1,76\n\
 26317546,SoBe Arena District Penthouse Apartment,157636265,SoBeNY,,Downtown,39.965915832238274,-83.00013235756751,Entire home/apt,699,2,0,,,53,362\n\
 26317550,SoBe Arena District Penthouse Apartment,157636265,SoBeNY,,Downtown,39.965859493587146,-83.00142286330417,Entire home/apt,599,2,0,,,53,348\n\
@@ -895,7 +857,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26513764,257 E 11th Ave,199418415,David,,Near North/University,39.99334159659742,-83.00028104275675,Entire home/apt,51,1,19,2018-08-11,13.90,1,0\n\
 26520321,Top Floor-Sand Volleyball-Bar&Grill + POOL!!!!,42675705,Corporate Housing Systems,,Hayden Run,40.063076506134244,-83.17103262317637,Entire home/apt,140,1,0,,,5,0\n\
 26520331,a kind home,177842548,Van,,Northland,40.0624825378881,-82.98222581656857,Private room,75,1,0,,,5,90\n\
-26523261,Downtown!! Views, Deck, Fully FURNISHED! Parking!,42675705,Corporate Housing Systems,,Downtown,39.95722475029484,-83.00053506270817,Entire home/apt,165,1,1,2018-07-23,1,5,0\n\
+26523261,"Downtown!! Views, Deck, Fully FURNISHED! Parking!",42675705,Corporate Housing Systems,,Downtown,39.95722475029484,-83.00053506270817,Entire home/apt,165,1,1,2018-07-23,1,5,0\n\
 26528307,Great Tuttle Crossing Community!,184134593,Malvina,,Hayden Run,40.07100870018839,-83.14908645775621,Entire home/apt,259,1,0,,,2,3\n\
 26528805,Great Tuttle Crossing Community-2b1,184134593,Malvina,,Hayden Run,40.0703517682845,-83.14969084696673,Entire home/apt,299,1,0,,,2,79\n\
 26537559,Columbus campus apartment,199577324,Ryan,,Near North/University,40.011363003600266,-83.01585925544784,Shared room,76,1,0,,,1,362\n\
@@ -924,13 +886,13 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26743052,5 Bedroom Luxury Apartment Across From OSU!,182018507,SoBe,,Near North/University,40.00420293324083,-83.00907565073948,Entire home/apt,604,1,0,,,51,349\n\
 26743079,Massive Lavish 5 Bedroom Apartment Near OSU!,182018507,SoBe,,Near North/University,40.00440279842146,-83.00947634139908,Entire home/apt,604,1,0,,,51,349\n\
 26743106,Doesnt Get Any Closer Than This - 2 BR at OSU!,182018507,SoBe,,Near North/University,40.003094828215154,-83.00785906014029,Entire home/apt,281,1,0,,,51,346\n\
-26743138,Perfect Place for 8- Location, Location!,182018507,SoBe,,Near North/University,40.006337805693086,-83.00941208846712,Entire home/apt,326,1,0,,,51,347\n\
+26743138,"Perfect Place for 8- Location, Location!",182018507,SoBe,,Near North/University,40.006337805693086,-83.00941208846712,Entire home/apt,326,1,0,,,51,347\n\
 26743217,Apartment for 6 near OSU and Short North!,182018507,SoBe,,Near North/University,40.00472861716602,-83.00782057691796,Entire home/apt,263,1,0,,,51,349\n\
 26743246,Deluxe 3 Bedroom/ 3 Bathroom Place for 10!,182018507,SoBe,,Near North/University,40.00553301325883,-83.00940794070142,Entire home/apt,366,1,0,,,51,364\n\
-26743292,Charming Apartment near OSU, Sleeps 8,182018507,SoBe,,Near North/University,40.00527625033224,-83.00840899008318,Entire home/apt,326,1,0,,,51,345\n\
+26743292,"Charming Apartment near OSU, Sleeps 8",182018507,SoBe,,Near North/University,40.00527625033224,-83.00840899008318,Entire home/apt,326,1,0,,,51,345\n\
 26743322,3 Bedroom Apartment near all the OSU ACTION!,182018507,SoBe,,Near North/University,40.005284140183704,-83.00929681417325,Entire home/apt,326,1,0,,,51,334\n\
-26743373,Spacious 3BR/3BA, Free Parking, Close to it all!,182018507,SoBe,,Near North/University,40.00493525770721,-83.00805549360415,Entire home/apt,366,1,0,,,51,350\n\
-26743399,3 Bedroom for 8, Walking Distance to OSU!,182018507,SoBe,,Near North/University,40.00469768063615,-83.00824095995755,Entire home/apt,326,1,0,,,51,334\n\
+26743373,"Spacious 3BR/3BA, Free Parking, Close to it all!",182018507,SoBe,,Near North/University,40.00493525770721,-83.00805549360415,Entire home/apt,366,1,0,,,51,350\n\
+26743399,"3 Bedroom for 8, Walking Distance to OSU!",182018507,SoBe,,Near North/University,40.00469768063615,-83.00824095995755,Entire home/apt,326,1,0,,,51,334\n\
 26743477,Walking Distance to OSU - 3 Bedroom/ 2 Bathroom!,182018507,SoBe,,Near North/University,40.00557361811843,-83.00788885911057,Entire home/apt,326,1,0,,,51,334\n\
 26746817,Sunny Brownstone Garden Flat Downtown w/Garage,116400313,Nate,,Downtown,39.964275721936176,-82.99312672281964,Entire home/apt,119,2,5,2018-08-02,4.69,9,73\n\
 26748357,Cozy 1 Bedroom Near OSU and Short North!,199656765,Jenny,,Near North/University,40.004878766774496,-82.99804249620439,Private room,63,2,1,,,4,48\n\
@@ -944,21 +906,21 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26751813,New Luxury 1 Bedroom right outside Downtown!,182018507,SoBe,,Downtown,39.969307288458126,-82.9914202001267,Entire home/apt,173,1,0,,,51,348\n\
 26751827,Cozy Abode near Short North!,182018507,SoBe,,Downtown,39.96984104745759,-82.9919762163351,Entire home/apt,173,1,0,,,51,348\n\
 26751843,Downtown Columbus 2 Bedroom Apt- Prime Locale!,182018507,SoBe,,Downtown,39.9689800369198,-82.99129176964557,Entire home/apt,203,1,0,,,51,345\n\
-26751883,Downtown Studio, Sleeps 4, Five Mins to OSU!,182018507,SoBe,,Downtown,39.97023330682319,-82.99122674421444,Entire home/apt,147,1,0,,,51,348\n\
-26751908,Stuio Aparment by Downtown, OSU, Short North!,182018507,SoBe,,Downtown,39.96847627012628,-82.99281210739176,Entire home/apt,147,1,0,,,51,342\n\
+26751883,"Downtown Studio, Sleeps 4, Five Mins to OSU!",182018507,SoBe,,Downtown,39.97023330682319,-82.99122674421444,Entire home/apt,147,1,0,,,51,348\n\
+26751908,"Stuio Aparment by Downtown, OSU, Short North!",182018507,SoBe,,Downtown,39.96847627012628,-82.99281210739176,Entire home/apt,147,1,0,,,51,342\n\
 26751921,Luxury 2 Bedroom/ 2 Bath Right Outside Downtown!,182018507,SoBe,,West Olentangy,39.98743949612979,-83.03408039203892,Entire home/apt,217,1,0,,,51,348\n\
 26751940,High End 2 Bedroom in a Great Location!,182018507,SoBe,,West Olentangy,39.98764216017923,-83.03223660533146,Entire home/apt,217,1,0,,,51,348\n\
-26751950,Lovely, Convient 2BR/2BA Apartment with Parking!,182018507,SoBe,,West Olentangy,39.98726431033803,-83.03235572938736,Entire home/apt,248,1,0,,,51,346\n\
+26751950,"Lovely, Convient 2BR/2BA Apartment with Parking!",182018507,SoBe,,West Olentangy,39.98726431033803,-83.03235572938736,Entire home/apt,248,1,0,,,51,346\n\
 26751981,2BR/2BA Luxury Apartment Near Downtown and OSU!,182018507,SoBe,,West Olentangy,39.98916095870901,-83.03235628006628,Entire home/apt,217,1,0,,,51,348\n\
 26751994,GameDay 2 Bedroom/ 2 Bathroom Lux Apartment!,182018507,SoBe,,Near North/University,40.0049946877579,-83.00980591108467,Entire home/apt,263,1,0,,,51,350\n\
 26752008,2 Bedroom Pad - Buckeye Certified!,182018507,SoBe,,Near North/University,40.00530698972348,-83.00832954832481,Entire home/apt,263,1,0,,,51,349\n\
-26752027,Unbeatable Location, 2 Bedroom Apartment for 6!,182018507,SoBe,,Near North/University,40.00504158803635,-83.00971092812762,Entire home/apt,263,1,0,,,51,350\n\
+26752027,"Unbeatable Location, 2 Bedroom Apartment for 6!",182018507,SoBe,,Near North/University,40.00504158803635,-83.00971092812762,Entire home/apt,263,1,0,,,51,350\n\
 26752042,Awesome Location - 2 Bedroom Apartment For Six!,182018507,SoBe,,Near North/University,40.00640314373102,-83.00774534563728,Entire home/apt,263,1,0,,,51,350\n\
-26752057,Perfect 2 Bedroom Apartment, Walk to OSU!,182018507,SoBe,,Near North/University,40.00659222354151,-83.00758040668164,Entire home/apt,263,1,0,,,51,334\n\
+26752057,"Perfect 2 Bedroom Apartment, Walk to OSU!",182018507,SoBe,,Near North/University,40.00659222354151,-83.00758040668164,Entire home/apt,263,1,0,,,51,334\n\
 26752076,2 BR Apartment- Experience the Best of Columbus!,182018507,SoBe,,Near North/University,40.00542272458383,-83.00812784583752,Entire home/apt,263,1,0,,,51,332\n\
-26752095,Experience Campus Living, 2 Bedroom Apt Near OSU!,182018507,SoBe,,Near North/University,40.005997465831115,-83.00765280350394,Entire home/apt,263,1,0,,,51,347\n\
-26752111,Nice 3 BR/ 2 Bathroom, Catch an OSU Game!,182018507,SoBe,,Near North/University,40.006805997251334,-83.00941249637243,Entire home/apt,326,1,0,,,51,350\n\
-26752128,Brand New, Luxury 3 Bedroom Apt across from OSU!,182018507,SoBe,,Near North/University,40.00545354109184,-83.00971951698976,Entire home/apt,326,1,0,,,51,332\n\
+26752095,"Experience Campus Living, 2 Bedroom Apt Near OSU!",182018507,SoBe,,Near North/University,40.005997465831115,-83.00765280350394,Entire home/apt,263,1,0,,,51,347\n\
+26752111,"Nice 3 BR/ 2 Bathroom, Catch an OSU Game!",182018507,SoBe,,Near North/University,40.006805997251334,-83.00941249637243,Entire home/apt,326,1,0,,,51,350\n\
+26752128,"Brand New, Luxury 3 Bedroom Apt across from OSU!",182018507,SoBe,,Near North/University,40.00545354109184,-83.00971951698976,Entire home/apt,326,1,0,,,51,332\n\
 26752902,Luxury loft apartment in historical building!,62908645,Hofit,,Downtown,39.95538251915384,-82.99504327376891,Entire home/apt,92,2,4,2018-08-12,4,2,134\n\
 26753704,Brand New 4BR/2BA Huge Home W/Patio & Gameroom,58040421,Tom,,Near East,39.96643565380719,-82.97737129417506,Entire home/apt,145,1,1,2018-08-10,1,12,252\n\
 26773706,Luxury Apartment at Tuttle Crossing!-2B,201317576,Malvina,,Hayden Run,40.060279742487936,-83.1288259214755,Entire home/apt,299,3,0,,,2,88\n\
@@ -974,17 +936,17 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26862729,Prestige B&B,200900486,Daphné,,Eastland/Brice,39.91281462027422,-82.90070236514923,Private room,78,1,2,2018-08-04,2,2,85\n\
 26864103,2 Bedroom Apartment - Short Distance to Downtown!,182018507,SoBe,,Downtown,39.97036306182104,-82.99131842058193,Entire home/apt,203,1,0,,,51,345\n\
 26866919,Short North Apartment w/ Gated Parking!,28665245,Allison,,Near North/University,39.98885167435326,-83.00444002863807,Entire home/apt,100,2,4,2018-08-12,4,1,136\n\
-26869874,New, Luxury 3 Bedroom right on OSU Camus!,182018507,SoBe,,Near North/University,40.006784955377476,-83.00820304250468,Entire home/apt,326,1,0,,,51,350\n\
+26869874,"New, Luxury 3 Bedroom right on OSU Camus!",182018507,SoBe,,Near North/University,40.006784955377476,-83.00820304250468,Entire home/apt,326,1,0,,,51,350\n\
 26886570,Private Bedroom in Columbus (air bed),65250167,Marina,,Near North/University,39.985336979263664,-83.00875106825997,Private room,52,1,2,2018-08-01,2,2,0\n\
 26892912,Classic Home between Downtown & Airport,159799820,Happy,,Southeast,39.88176024434837,-82.82974674018297,Entire home/apt,87,2,1,2018-07-22,1,2,3\n\
 26898637,LC Dublin apartment,158030141,Mackenzie,,Hayden Run,40.06340626677079,-83.173984441158,Private room,55,2,0,,,1,345\n\
 26921437,Super comfortable twin airbed in living room,65250167,Marina,,Near North/University,39.98541308747847,-83.00972165976961,Shared room,37,1,3,2018-07-31,2.81,2,0\n\
-26934315,Great location ! Short North, downtown, OSU 1,126352484,Evette,,South Linden,39.98268287210507,-82.98787353507386,Entire home/apt,140,1,0,,,2,156\n\
+26934315,"Great location ! Short North, downtown, OSU 1",126352484,Evette,,South Linden,39.98268287210507,-82.98787353507386,Entire home/apt,140,1,0,,,2,156\n\
 26950140,SoBe Buckeye Flats Gigantic 4BR/4BA!,157636265,SoBeNY,,Near North/University,40.00732117811804,-83.01640171693535,Entire home/apt,1099,2,0,,,53,347\n\
 26950152,SoBe Buckeye Flats Private 5BR/3BA!,157636265,SoBeNY,,Near North/University,40.0062437381189,-83.01627547449556,Entire home/apt,1199,2,0,,,53,349\n\
 26950163,SoBe Buckeye Flats Superb 6BR/4BA!,157636265,SoBeNY,,Near North/University,40.0060106605722,-83.01710282174419,Entire home/apt,1299,2,0,,,53,349\n\
-26955033,Central: OSU, Arena District & Downtown,158324654,Astor,,Near North/University,39.9741798600547,-83.01301202491598,Private room,25,1,5,2018-08-11,5,1,176\n\
-26955990,Mid-Century Modern- Cozy, Columbus Ranch.,119538863,Michael,,Eastmoor/Walnut Ridge,39.94039365358222,-82.9204007302435,Entire home/apt,99,1,0,,,1,137\n\
+26955033,"Central: OSU, Arena District & Downtown",158324654,Astor,,Near North/University,39.9741798600547,-83.01301202491598,Private room,25,1,5,2018-08-11,5,1,176\n\
+26955990,"Mid-Century Modern- Cozy, Columbus Ranch.",119538863,Michael,,Eastmoor/Walnut Ridge,39.94039365358222,-82.9204007302435,Entire home/apt,99,1,0,,,1,137\n\
 26958606,Huge NEW Brick 3BR/2BA Home Minutes to Downtown,58040421,Tom,,Near East,39.969320120049275,-82.97571455869188,Entire home/apt,139,1,1,2018-08-06,1,12,262\n\
 26981039,The Olde Towne Duplex #1,51959867,Stephen,,Near East,39.96480070367235,-82.97104462987592,Entire home/apt,66,3,0,,,2,164\n\
 26989758,SoBe Holly View Flats 2/2 Loft!,157636265,SoBeNY,,West Olentangy,39.988403735896966,-83.03246906806463,Entire home/apt,699,2,0,,,53,349\n\
@@ -992,9 +954,9 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 26993507,Retro Clintonville Home: MCM to Modern Comfort,4842520,Genie,,Clintonville,40.057173191636224,-83.01363525696826,Private room,49,2,0,,,1,4\n\
 26995362,Brand New Apartment- Polaris Mall Area,192619839,Melanie,,Far North,40.13798896406751,-82.9877637250125,Private room,60,1,2,2018-08-12,2,1,143\n\
 27020716,Modern Two Bedroom In Blacklick,71385188,Jayda,,Far East,39.99051201448658,-82.81377950605403,Entire home/apt,70,2,3,2018-08-10,3,1,315\n\
-27031752,3 Bedroom Apartment, 5 Queen Beds, Across From OSU,182018507,SoBe,,Near North/University,40.00759590175742,-83.01713441165599,Entire home/apt,678,1,0,,,51,348\n\
-27031766,Amazing 4 BBR / 4 BA, Bring Everyone to the Game!,182018507,SoBe,,Near North/University,40.00658142946104,-83.01743329451868,Entire home/apt,596,1,0,,,51,346\n\
-27057773,Quiet, Private room in House close to city and OSU,56597957,Jason,,West Olentangy,40.028026835633746,-83.05168799134177,Private room,60,1,0,,,1,104\n\
+27031752,"3 Bedroom Apartment, 5 Queen Beds, Across From OSU",182018507,SoBe,,Near North/University,40.00759590175742,-83.01713441165599,Entire home/apt,678,1,0,,,51,348\n\
+27031766,"Amazing 4 BBR / 4 BA, Bring Everyone to the Game!",182018507,SoBe,,Near North/University,40.00658142946104,-83.01743329451868,Entire home/apt,596,1,0,,,51,346\n\
+27057773,"Quiet, Private room in House close to city and OSU",56597957,Jason,,West Olentangy,40.028026835633746,-83.05168799134177,Private room,60,1,0,,,1,104\n\
 27067214,Columbus House,203464569,Anitra,,Franklinton,39.95114487463895,-83.03364781628532,Private room,256,1,0,,,1,364\n\
 27068144,★Queen Bed★Riverside OSU★Laundry★COTA/CABS,41002453,Jerry,,West Olentangy,40.022418880215916,-83.0352993474213,Private room,32,1,12,2018-08-06,12,8,324\n\
 27083885,★Queen Bed★OSU/Riverside★BUS/Walk★Updated★UV★,41002453,Jerry,,West Olentangy,40.02062912263142,-83.03420144994575,Private room,33,1,2,2018-07-29,2,8,345\n\
@@ -1011,21 +973,21 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 27201558,Completely Renovated 3BR/2BA 1 Mile to Downtown,58040421,Tom,,Near East,39.97103011847836,-82.9736964294289,Entire home/apt,129,1,0,,,12,262\n\
 27203067,Quaint and Quiet Merion Village Home!,34599151,David,,Near South,39.93131869735125,-82.98850972714041,Entire home/apt,89,1,4,2018-08-12,4,1,163\n\
 27223749,Whole House Upland Dr,39662644,Paul,,Northland,40.06645391521028,-82.98987560342233,Entire home/apt,125,2,0,,,9,14\n\
-27226384,Charming one-level near OSU, CSCC and downtown,118362254,Kamilah,,South Linden,40.00055402646406,-82.97797656727037,Private room,50,1,2,2018-08-08,2,1,69\n\
+27226384,"Charming one-level near OSU, CSCC and downtown",118362254,Kamilah,,South Linden,40.00055402646406,-82.97797656727037,Private room,50,1,2,2018-08-08,2,1,69\n\
 27234926,Spectacular Urban Condo - Convention Center/Arena,116400313,Nate,,Downtown,39.964459229019866,-82.99690707762028,Entire home/apt,119,2,1,2018-07-30,1,9,164\n\
 27252097,Grandview Apartment,205256572,Stephanie,,West Olentangy,39.98760991234019,-83.04211782619144,Entire home/apt,100,2,0,,,1,341\n\
 27287259,The Avenue at Polaris,205562290,Lisa,,Far North,40.13615267088704,-82.9871214989605,Entire home/apt,80,2,0,,,1,11\n\
-27311622,convenient, clean, Dublin room.,3844781,Baber,,Hayden Run,40.07286726291513,-83.15394778245415,Private room,45,1,1,2018-08-08,1,1,88\n\
-27330491,Location! OSU, Convention Center, Short North 2,126352484,Evette,,South Linden,39.98224773318595,-82.98662656616001,Private room,52,1,3,2018-08-09,3,2,176\n\
+27311622,"convenient, clean, Dublin room.",3844781,Baber,,Hayden Run,40.07286726291513,-83.15394778245415,Private room,45,1,1,2018-08-08,1,1,88\n\
+27330491,"Location! OSU, Convention Center, Short North 2",126352484,Evette,,South Linden,39.98224773318595,-82.98662656616001,Private room,52,1,3,2018-08-09,3,2,176\n\
 27336057,Hip Historic Loft - Short North/Convention Center,116400313,Nate,,Near North/University,39.97537358233126,-83.0028004652357,Entire home/apt,89,2,1,2018-08-05,1,9,87\n\
-27337115,Urban & Cozy Loft in Columbus, Ohio,628962,Michael,,Near North/University,39.97512765990946,-83.00232173635794,Entire home/apt,90,1,5,2018-08-12,5,1,135\n\
+27337115,"Urban & Cozy Loft in Columbus, Ohio",628962,Michael,,Near North/University,39.97512765990946,-83.00232173635794,Entire home/apt,90,1,5,2018-08-12,5,1,135\n\
 27339321,SoBe Northwest Apartments Cozy 1 Bedroom!,157636265,SoBeNY,,Northwest,40.0567748824449,-83.04528421800154,Entire home/apt,199,2,0,,,53,317\n\
 27339383,SoBe Easton Apartments Deluxe 2BR/1BA!,157636265,SoBeNY,,Northeast,40.02666669372464,-82.91838686839385,Entire home/apt,292,2,0,,,53,362\n\
 27341208,Gem of German Village,89696876,Eric,,Near South,39.952094446230944,-82.98821209587618,Entire home/apt,98,1,6,2018-08-11,6,2,307\n\
 27357371,Private Bedroom in Harrison West w/Pool & Gym,37147991,Jeena,,Near North/University,39.97541623017911,-83.0149901712192,Private room,50,1,1,2018-08-12,1,1,69\n\
 27359934,Steps from Short North,70413293,STR Capital,,Near North/University,39.98613960582778,-83.00250960932594,Entire home/apt,89,1,0,,,8,349\n\
 27362885,Mirada,147215338,Coco,,Far North,40.141978136297965,-83.01667547443856,Entire home/apt,62,4,0,,,1,80\n\
-27369374,our little, VERY little, slice of heaven,32259822,Bob,,Eastland/Brice,39.91763489327944,-82.81526371234379,Shared room,30,1,2,2018-08-10,2,1,40\n\
+27369374,"our little, VERY little, slice of heaven",32259822,Bob,,Eastland/Brice,39.91763489327944,-82.81526371234379,Shared room,30,1,2,2018-08-10,2,1,40\n\
 27390649,Cozy Futon/Studio,104317092,Kateresa,,Eastland/Brice,39.92706679846932,-82.8208621166152,Private room,55,1,0,,,2,362\n\
 27391816,Quiet Columbus Condominium,71353601,Margaret,,Northwest,40.081062706932386,-83.05244940161182,Private room,35,1,1,2018-08-12,1,1,1\n\
 27392173,Columbus House,103015471,Kelsey,,Hilltop,39.95039858643195,-83.05018602859333,Entire home/apt,81,1,1,2018-08-09,1,1,155\n\
@@ -1038,7 +1000,7 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 27436629,Charming Home - OSU/Short North -Remodeled/Private,199656765,Jenny,,Near North/University,40.004414329559154,-82.99928483974426,Entire home/apt,219,1,0,,,4,137\n\
 27437147,Charming home in historic Clintonville- near OSU,198738968,Randy,,Clintonville,40.02820546329242,-83.0146564848359,Entire home/apt,110,1,1,2018-08-13,1,1,145\n\
 27459976,Clintonville's Best Back Yard,146381101,David,,Clintonville,40.07319752029449,-83.00698940119739,Entire home/apt,110,3,0,,,1,170\n\
-27465362,Charming, Family-Friendly House Near Ohio Stadium,144370026,Allison,,Clintonville,40.0604657465504,-83.01209709205128,Entire home/apt,100,1,0,,,1,46\n\
+27465362,"Charming, Family-Friendly House Near Ohio Stadium",144370026,Allison,,Clintonville,40.0604657465504,-83.01209709205128,Entire home/apt,100,1,0,,,1,46\n\
 27485672,Beautiful & Cozy Home!,207143746,Adam,,Westland,39.91690082616303,-83.11928699430533,Private room,50,1,6,2018-08-12,6,1,295\n\
 27492620,Private King Room with en-suite Bathroom,17077324,John,,Hayden Run,40.074261037031405,-83.11567367250119,Private room,75,1,0,,,1,52\n\
 27501626,The Rooftop Penthouse | Convention Center/Arena,10620281,Robert,,Downtown,39.96754322957022,-83.00260915061241,Entire home/apt,119,29,0,,,3,165\n\
@@ -1053,18 +1015,18 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 27552180,Simple private room in a fantastic location,102431055,Alex,,Clintonville,40.06504307501347,-83.01734291365506,Private room,32,1,2,2018-08-13,2,1,31\n\
 27553741,Private Oasis in the Heart of it All!,21266003,Jeff,,West Olentangy,39.994273595942126,-83.07144464665971,Entire home/apt,700,3,0,,,1,87\n\
 27556305,Your Ohio vacay house!,88880437,Jing,,Rocky Fork-Blacklick,40.11192574874113,-82.83007128459658,Private room,25,1,0,,,1,163\n\
-27566950,Short North Private Apt, Three Blocks from High St,125943733,Joe,,Near North/University,39.98573509673146,-83.0101181012746,Entire home/apt,73,1,2,2018-08-11,2,3,331\n\
+27566950,"Short North Private Apt, Three Blocks from High St",125943733,Joe,,Near North/University,39.98573509673146,-83.0101181012746,Entire home/apt,73,1,2,2018-08-11,2,3,331\n\
 27578709,Bengali House,208087011,Rishat,,Far North,40.157123559655425,-82.99058089221548,Private room,79,1,0,,,1,180\n\
 27580903,5 Min to Short North Brick Townhouse w/ Parking,58040421,Tom,,Near North/University,39.97993843105168,-83.01343570662316,Entire home/apt,1000,1,0,,,12,268\n\
 27584351,Minutes from downtown Columbus and OSU,165735297,Yann,,Franklinton,39.960644294266466,-83.03225020071406,Private room,24,1,1,2018-08-09,1,1,357\n\
-27602221,Comfortable Private Room, Columbus Short North,119467039,Rebecca,,Near North/University,39.983179463923655,-83.00128079003125,Private room,75,1,0,,,1,82\n\
+27602221,"Comfortable Private Room, Columbus Short North",119467039,Rebecca,,Near North/University,39.983179463923655,-83.00128079003125,Private room,75,1,0,,,1,82\n\
 27609278,Mongo's House of Serenity,11913583,Jacob,,Rocky Fork-Blacklick,40.06024829191016,-82.88240851909411,Entire home/apt,150,1,0,,,1,6\n\
-27617374,Spacious 1BR Apartment, close to OSU and Downtown!,61877120,Suzanne,,West Olentangy,39.9880714167254,-83.028445403407,Entire home/apt,100,2,0,,,1,26\n\
-27623829,**3,000+sf home**1 King*2 Queens*Movie & Weight Rm,117860767,Remington,,Far East,40.003430048273536,-82.78620420971183,Entire home/apt,110,2,0,,,1,106\n\
+27617374,"Spacious 1BR Apartment, close to OSU and Downtown!",61877120,Suzanne,,West Olentangy,39.9880714167254,-83.028445403407,Entire home/apt,100,2,0,,,1,26\n\
+27623829,"**3,000+sf home**1 King*2 Queens*Movie & Weight Rm",117860767,Remington,,Far East,40.003430048273536,-82.78620420971183,Entire home/apt,110,2,0,,,1,106\n\
 27634468,Room in Unique Shared House in SoHud,13643490,Dairdre,,Near North/University,40.014334795641254,-82.99728390016948,Private room,39,1,0,,,1,164\n\
 27637565,Great room with own bathroom . Laundry available,180516115,Uuceff,,Westland,39.97585991667661,-83.14603903518902,Private room,50,1,0,,,1,52\n\
 27656689,Wonderful home 12-minutes from downtown Columbus!,89732553,Bryce,,Eastland/Brice,39.92426672625143,-82.82166784050295,Entire home/apt,60,4,0,,,1,70\n\
-27662267,Private, sunlight Clintonville home,12057119,(Email hidden by Airbnb),,Clintonville,40.04010517159903,-83.02688128334138,Private room,75,3,0,,,1,361\n\
+27662267,"Private, sunlight Clintonville home",12057119,(Email hidden by Airbnb),,Clintonville,40.04010517159903,-83.02688128334138,Private room,75,3,0,,,1,361\n\
 27673169,Private Modern Suburb Apartment,185673165,Chloe,,Southeast,39.903287409518924,-82.81015559811401,Entire home/apt,47,1,0,,,1,15\n\
 27703562,Trolley Stop - Private Apartment in Franklin Park,90301326,Abe,,Near East,39.96202563045511,-82.95658366596207,Entire home/apt,100,1,0,,,1,167\n\
 27708732,Furnished 2 bed room basement,209183601,Jagdish,,Far West,40.011100971395706,-83.16734128578513,Private room,30,1,0,,,1,175\n\
@@ -1076,38 +1038,4 @@ w/ parking,11930197,Scott,,Near North/University,39.98182386194305,-83.014650738
 27779731,Completely Updated 3BR German Village Townhouse,58040421,Tom,,Near South,39.94879504604017,-82.98440590384108,Entire home/apt,10000,1,0,,,12,263\n\
 27780838,Spacious Brick German Village 3RB Townhouse,58040421,Tom,,Near South,39.94884316786269,-82.9831381798914,Entire home/apt,125,1,0,,,12,266\n\
 27781223,Large Short North/Victorian Village 3BR Townhouse!,58040421,Tom,,Near North/University,39.9830470000141,-83.0127075418249,Entire home/apt,125,1,0,,,12,266\n\
-27785749,London Flat-Center of Columbus,70413293,STR Capital,,Near South,39.94114359425294,-82.99720010102797,Entire home/apt,125,1,0,,,8,355";
-            return csvJSON(data);
-        }
-    </script>
-    
-    <script>
-        var data = JSON.parse(getData());
-        // Initialize map and set view
-        var mymap = L.map('mapid').setView([39.961178, -82.998795], 11);
-        // Create tile layer
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 18,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1Ijoidml0YWxpeS1tYXRpeWFzaCIsImEiOiJjam5nZGdqdGEwMHVxM3FuMW45aHd4Mm15In0.S_-8ZbgX0x354Brdhmyn5A'
-        }).addTo(mymap);
-        for (d in data) {
-            // console.log(data[d])
-            var marker = data[d]
-            var lat = parseFloat(marker.latitude);
-            var lon = parseFloat(marker.longitude);
-            if (!isNaN(lat) &&!isNaN(lon)) {
-                L.marker([lat, lon]).addTo(mymap)
-                    .bindPopup("<b>" + marker.name + "</b></br>" + 
-                    marker.neighbourhood + "</br>" +
-                    "Price: <b>" + marker.price + "</b></br>" +
-                    "Room type: <b>" + marker.room_type + "</b></br>"
-                    
-                    ).openPopup();
-            }
-        }
-        
-    </script>
-</body>
-</html>
+27785749,London Flat-Center of Columbus,70413293,STR Capital,,Near South,39.94114359425294,-82.99720010102797,Entire home/apt,125,1,0,,,8,355
